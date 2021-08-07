@@ -78,8 +78,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'ahmadtau_siman',
 	'password' => 'Taufiky2000',
-	'database' => 'ahmadtau_sistem_ormale', 
-	//asdasdasd
+	'database' => 'ahmadtau_sistem_ormale',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
