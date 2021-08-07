@@ -25,7 +25,7 @@
     
     <?php foreach ($menu as $m) : ?>
         <li class="nav-item <?= ($this->uri->segment(1) == $m['menu']) ? 'active' : '' ?>">
-        <a data-toggle="collapse" data-target="#<?= $m['menu']?>" class="nav-link collapsed" href="<?php echo base_url('user/agenda') ?>">
+        <a data-toggle="collapse" data-target="#<?= $m['menu']?>" class="nav-link collapsed" href="#">
             <i class="<?php echo $m['icon']; ?>"></i>
             <span><?= $m["menu"]?></span></a>
             <div id="<?= $m['menu']?>" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
