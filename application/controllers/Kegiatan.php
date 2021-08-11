@@ -28,17 +28,29 @@ class Kegiatan extends CI_Controller
   {
       $data['user'] = $this->user_model->dataUser();
       $pertanggungjwb1 = $this->db->get_where('pertanggungjwb')->result_array();
-
-      foreach($pertanggungjwb1 as $row){
-          $id_prog = $row["id_prog"];
-          $dt["id"] = $row['id'];
+      if($pertanggungjwb1){
+          foreach($pertanggungjwb1 as $row){
+              $id_prog = $row["id_prog"];
+              $dt["id"] = $row['id'];
           $dt["nama_kegiatan"] = $row['nama_kegiatan'];
           $dt["hasil"] = $row['hasil'];
           $dt["link_dokumentasi"] = $row['link_dokumentasi'];
           $dt["lpj"] = $row['lpj'];
           $dt["deskripsi"] = $this->db->get_where('program',['id'=>$id_prog])->row_array()['deskripsi'];
           $data_table[] = $dt;
-      };
+        };
+    }
+    else{
+        
+        $data_table[] = array(
+            'id' => "-",
+            'nama_kegiatan' => "-",
+            'hasil' => "-",
+            'link_dokumentasi' => "-",
+            'lpj' => "-",
+            'deskripsi' => "-",
+        );
+    }
 
       $data["pertanggung_jwb"] = $data_table;
       $data['prog_terlaksana'] = $this->db->get_where('pelaksanaan')->result_array();
