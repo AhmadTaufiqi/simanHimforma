@@ -78,6 +78,6 @@
 th {
   vertical-align: middle !important;
 }
-.swal-delete{
+.swal-delete , .edit-button2{
   cursor: pointer;
 }

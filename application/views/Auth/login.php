@@ -29,16 +29,12 @@
                   <button type="submit" class="btn btn-primary btn-user btn-block">
                     Login
                   </button>
-
                   <hr>
-                  <div class="text-center">
-                    <a class="small" href="<?php echo base_url('auth/forgotpassword'); ?>">Forgot Password?</a>
-                  </div>
                   <!-- <div class="text-center">
                     <a class="small" href="<?php echo base_url('auth/register'); ?>">Create an Account!</a>
                   </div> -->
               </div>
-            </div>
+            </>
           </div>
         </div>
       </div>

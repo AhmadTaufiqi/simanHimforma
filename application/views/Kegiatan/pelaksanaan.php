@@ -36,7 +36,8 @@
                             <div class="list-group list-group-flush">
                               <li class="list-group-item p-1"><span class="text-primary">Nama File : </span><?= $ar['file_proposal'] ?></li>
                               <li class="list-group-item p-1 "><span class="text-primary">tanggal pelaksanaan : </span><?= $ar['tgl_pelaksanaan'] ?> </li>
-                              <li class="list-group-item px-1"><span class="text-primary">Status :</span> TERLAKSANA</li>
+                              <li class="list-group-item p-1 "><span class="text-primary">dana keseluruhan : </span>Rp. <?= number_format($ar['dana_keseluruhan'],0,',','.') ?> </li>
+                              <!-- <li class="list-group-item px-1"><span class="text-primary">Status :</span> TERLAKSANA</li> -->
                             </div>
                           </div>
                         </div>
@@ -97,8 +98,20 @@
           </div>
           <div class="form-group">
             <input type="date" class="form-control" id="date-control" name="tgl_pelaksanaan">
-            <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan">
+            <input hidden="true" type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan">
 
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" id="dana_dkm" placeholder="dana dkm" name="dana_dkm">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" id="dana_lkm" placeholder="dana lkm" name="dana_lkm">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" id="dana_lkm" placeholder="dana sponsor" name="dana_sponsor" title="isi jika ada">
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" id="dana_lain" placeholder="dana lain" name="dana_lain" title="isi jika ada">
           </div>
           <div class="custom-file">
             <input type="file" class="custom-file-input" id="file" name="file">
@@ -124,9 +137,26 @@
         </div>
         <?php echo form_open_multipart('crudKegiatan/editPelaksanaan'); ?>
         <div class="modal-body">
-          <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="" hidden>
+          <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="">
           <div class="form-group">
+            <label>nama kegiatan</label>
             <input type="text" class="form-control" id="NAMA_KEGIATAN" name="nama" readonly>
+          </div>
+          <div class="form-group">
+            <label>dana DKM</label>
+            <input type="number" class="form-control" id="edit_DKM" name="dana_DKM">
+          </div>
+          <div class="form-group">
+            <label>dana LKM</label>
+            <input type="text" class="form-control" id="edit_LKM" name="dana_LKM">
+          </div>
+          <div class="form-group">
+            <label>dana sponsor</label>
+            <input type="text" class="form-control" id="edit_sponsor" name="dana_sponsor">
+          </div>
+          <div class="form-group">
+            <label>dana lain</label>
+            <input type="text" class="form-control" id="edit_lain" name="dana_lain">
           </div>
           <!-- <div class="form-group">
                         <input type="text" class="form-control" id="nama" name="nama" placeholder="deskripsi">
@@ -166,8 +196,13 @@
       url: '<?= base_url('crudKegiatan/showDataEditPelaksanaan') ?>',
       success: function(data) {
         var objectResult = JSON.parse(data)
+        console.log(objectResult);
         $("#ROW_ID").val(objectResult.id);
         $("#NAMA_KEGIATAN").val(objectResult.nama_kegiatan);
+        $("#edit_DKM").val(objectResult.dana_DKM);
+        $("#edit_LKM").val(objectResult.dana_LKM);
+        $("#edit_sponsor").val(objectResult.dana_sponsor);
+        $("#edit_lain").val(objectResult.dana_lain);
         $("#FILE").next('.custom-file-label').addClass("selected").html(objectResult.file_proposal);
       }
     })
@@ -198,7 +233,7 @@
     var id_del = this.id;
     // console.log("mantappps")
     Swal.fire({
-      icon:'question',
+      icon: 'question',
       title: 'Are you sure?',
       type: 'warning',
       width: 400,

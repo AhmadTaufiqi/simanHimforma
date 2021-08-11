@@ -61,6 +61,11 @@ class Kegiatan extends CI_Controller
           $dt["id_proposal"] = $row['id_proposal'];
           $dt["file_proposal"] = $row['file_proposal'];
           $dt["tgl_pelaksanaan"] = $row['tgl_pelaksanaan'];
+          if($dana = $this->db->get_where('sumber_dana_kegiatan', ['id_prog' => $id_prog])->row_array()){
+              $dt["dana_keseluruhan"] = $dana['dana_DKM'] + $dana['dana_LKM'] + $dana['dana_sponsor'] + $dana['dana_lain'];
+            }else{
+                $dt["dana_keseluruhan"] = '0';
+            }
           $dt["deskripsi"] = $this->db->get_where('program',['id' =>$id_prog])->row_array()['deskripsi'];
           $data_table[] = $dt;
       };

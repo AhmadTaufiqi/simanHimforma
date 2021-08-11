@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class crudKegiatan extends CI_Controller
 {
-
    public function __construct()
    {
       parent::__construct();
@@ -14,8 +13,6 @@ class crudKegiatan extends CI_Controller
          redirect('Auth');
       }
    }
-
-
    public function showDataTglComboKeg()
    {
       $id_keg = $this->input->post('id_keg');
@@ -27,6 +24,10 @@ class crudKegiatan extends CI_Controller
       $id_kegiatan = $this->input->post('option_kegiatan');
       $tgl_pelaksanaan = $this->input->post('tgl_pelaksanaan');
       $nama_kegiatan = $this->input->post('nama_kegiatan');
+      $dana_dkm = $this->input->post('dana_dkm');
+      $dana_lkm = $this->input->post('dana_lkm');
+      $dana_sponsor = $this->input->post('dana_sponsor');
+      $dana_lain = $this->input->post('dana_lain');
       $file_pelaksanaan = $_FILES['file']['name'];
       if (strlen($id_kegiatan) == 0 || strlen($tgl_pelaksanaan) == 0 || strlen($file_pelaksanaan) == 0) {
          // $tes = "FILE DAN PROGRAM HARUS DI ISI";
@@ -45,6 +46,13 @@ class crudKegiatan extends CI_Controller
                $new_file = $this->upload->data('file_name');
 
 
+               $data2 = array(
+                  'id_prog' => $id_kegiatan,
+                  'dana_DKM' => $dana_dkm,
+                  'dana_LKM' => $dana_lkm,
+                  'dana_sponsor' => $dana_sponsor,
+                  'dana_lain' => $dana_lain
+               );
                $data = array(
                   'id_prog' => $id_kegiatan,
                   'nama_kegiatan' => $nama_kegiatan,
@@ -53,6 +61,7 @@ class crudKegiatan extends CI_Controller
                );
 
                // $tes  = $data;
+               $this->db->insert('sumber_dana_kegiatan', $data2);
                $this->db->insert('pelaksanaan', $data);
                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil di input!</div>');
             } else {
@@ -70,15 +79,35 @@ class crudKegiatan extends CI_Controller
    public function showDataEditPelaksanaan()
    {
       $param1 = $this->input->post('id_program');
-      $data = $this->db->get_where('pelaksanaan', ['id' => $param1])->row_array();
+      $pelaksanaan = $this->db->get_where('pelaksanaan', ['id' => $param1])->row_array();
+      if($sumber_dana = $this->db->get_where('sumber_dana_kegiatan', ['id_prog' => $pelaksanaan['id_prog']])->row_array()){
+         $dana = $sumber_dana;
+      }else{
+         $dana = [
+            'dana_DKM' => "0",
+            'dana_LKM' => "0",
+            'dana_sponsor' => "0",
+            'dana_lain' => "0"
+         ];
+      }
+      $data = array(
+         'id' => $pelaksanaan['id'],
+         'dana_DKM' => $dana['dana_DKM'],
+         'dana_LKM' => $dana['dana_LKM'],
+         'dana_sponsor' => $dana['dana_sponsor'],
+         'dana_lain' => $dana['dana_lain'],
+         'nama_kegiatan' => $pelaksanaan['nama_kegiatan'],
+         'file_proposal' => $pelaksanaan['file_proposal'],
+         'tgl_pelaksanaan' => $pelaksanaan['tgl_pelaksanaan']
+      );
       echo json_encode($data);
       // $this->db->get_where();
    }
    public function editPelaksanaan()
    {
       $rowid = $this->input->post('ROW_ID');
-      $data2['file'] = $this->db->get_where('pelaksanaan', ['id' => $rowid])->row_array();
-      // $data2['file'] = "mantappp";
+
+      $data2 = $this->db->get_where('pelaksanaan', ['id' => $rowid])->row_array();
       $file = $_FILES['file']['name'];
       if ($file) {
          $config['allowed_types'] = 'pdf|docx|dox|xlsx|xls';
@@ -89,7 +118,7 @@ class crudKegiatan extends CI_Controller
 
          if ($this->upload->do_upload('file')) {
 
-            $old_file = $data2['file']['file_proposal'];
+            $old_file = $data2['file_proposal'];
             if ($old_file != 'proposal.pdf') {
                unlink(FCPATH . 'assets/files/proposal_terlaksana/' . $old_file);
             }
@@ -100,20 +129,25 @@ class crudKegiatan extends CI_Controller
             echo  $this->upload->display_errors();
          }
       } else {
-         $new_file = $data2['file']['file_proposal'];
-         // $new_file = "mantap.pdf";
+         $new_file = $data2['file_proposal'];
       }
 
-      $data = array(
-         // 'id' => $rowid,
-         'nama_kegiatan' => $this->input->post('nama'),
-         // "mana",
-         'file_proposal' => $new_file
-         // "mana",
+      $data3 = array(
+         'dana_DKM' => $this->input->post('dana_DKM'),
+         'dana_LKM' => $this->input->post('dana_LKM'),
+         'dana_sponsor' => $this->input->post('dana_sponsor'),
+         'dana_lain' => $this->input->post('dana_lain')
       );
-      // var_dump($data);
+      $this->db->where('id_prog', $data2['id_prog']);
+      $this->db->update('sumber_dana_kegiatan', $data3);
+
+      $data = array(
+         'nama_kegiatan' => $this->input->post('nama'),
+         'file_proposal' => $new_file
+      );
       $this->db->where('id', $rowid);
       $this->db->update('pelaksanaan', $data);
+
       $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil di edit!</div>');
       redirect('Kegiatan/pelaksanaan');
    }
@@ -121,7 +155,9 @@ class crudKegiatan extends CI_Controller
    public function deletePelaksanaan($id_del)
    {
       $pertanggungjwb = $this->db->get_where('pertanggungjwb', ['id_pelaksanaan' => $id_del])->result();
+      $pelaksanaan = $this->db->get_where('pelaksanaan',['id' => $id_del])->row_array();
       $file_proposal = $this->db->get_where('pelaksanaan', ['id' => $id_del])->row_array()['file_proposal'];
+      $this->db->delete('sumber_dana_kegiatan', ['id_prog' => $pelaksanaan['id_prog']]);
       $this->db->delete('pelaksanaan', ['id' => $id_del]);
       unlink(FCPATH . 'assets/files/proposal_terlaksana/' . $file_proposal);
       if ($pertanggungjwb) {
