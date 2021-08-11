@@ -13,6 +13,10 @@ class crudKegiatan extends CI_Controller
          redirect('Auth');
       }
    }
+
+   public function testingDummy(){
+      echo "ahmad taufiqi muhsinin";
+   }
    public function showDataTglComboKeg()
    {
       $id_keg = $this->input->post('id_keg');
