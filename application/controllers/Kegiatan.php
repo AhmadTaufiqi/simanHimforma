@@ -11,7 +11,9 @@ class Kegiatan extends CI_Controller
         $this->load->model('user_model');
         is_logged_in();
     }
-
+    public function testingDummy2(){
+        echo "ahmad taufiqi muhsinin";
+    }
   public function perencanaan()
   {
       $data['user'] = $this->user_model->dataUser();
