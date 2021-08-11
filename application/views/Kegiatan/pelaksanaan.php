@@ -137,7 +137,7 @@
         </div>
         <?php echo form_open_multipart('crudKegiatan/editPelaksanaan'); ?>
         <div class="modal-body">
-          <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="">
+          <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="" hidden="true">
           <div class="form-group">
             <label>nama kegiatan</label>
             <input type="text" class="form-control" id="NAMA_KEGIATAN" name="nama" readonly>
