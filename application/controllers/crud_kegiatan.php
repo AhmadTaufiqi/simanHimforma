@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 
-class crudKegiatan extends CI_Controller
+class crud_kegiatan extends CI_Controller
 {
    public function __construct()
    {
@@ -14,7 +14,7 @@ class crudKegiatan extends CI_Controller
       }
    }
 
-   public function testingDummy(){
+   public function testing_dummy(){
       echo "ahmad taufiqi muhsinin";
    }
    public function showDataTglComboKeg()
