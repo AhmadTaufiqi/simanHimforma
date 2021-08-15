@@ -14,14 +14,14 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>program</th>
-              <th width="20%">file proposal</th>
+              <th class="py-2">program</th>
+              <th class="py-2" width="20%">file proposal</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($pelaksanaan as $ar) : ?>
               <tr>
-                <td>
+                <td class="p-1">
 
 
                   <div class="card shadow2" style="height:150px;">
@@ -36,7 +36,7 @@
                             <div class="list-group list-group-flush">
                               <li class="list-group-item p-1"><span class="text-primary">Nama File : </span><?= $ar['file_proposal'] ?></li>
                               <li class="list-group-item p-1 "><span class="text-primary">tanggal pelaksanaan : </span><?= $ar['tgl_pelaksanaan'] ?> </li>
-                              <li class="list-group-item p-1 "><span class="text-primary">dana keseluruhan : </span>Rp. <?= number_format($ar['dana_keseluruhan'],0,',','.') ?> </li>
+                              <li class="list-group-item p-1 "><span class="text-primary">dana keseluruhan : </span>Rp. <?= number_format($ar['dana_keseluruhan'], 0, ',', '.') ?> </li>
                               <!-- <li class="list-group-item px-1"><span class="text-primary">Status :</span> TERLAKSANA</li> -->
                             </div>
                           </div>
@@ -58,7 +58,7 @@
                     </div>
                   </div>
                 </td>
-                <td>
+                <td class="p-1">
                   <a href="<?= base_url('assets/files/proposal_terlaksana/') . $ar['file_proposal'] ?>" class="btn shadow2" target="blank" style="height:150px; display: flex; flex-direction: column;align-items:center; overflow:hidden;">
                     <img width="100" src="<?= base_url('assets/img/book_icon.png') ?>" alt="">
                     <span><?= $ar['nama_kegiatan'] ?></span>

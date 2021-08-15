@@ -179,52 +179,92 @@ class CrudKegiatan extends CI_Controller
    public function addProgram()
    {
       $this->form_validation->set_rules('nama', '"nama program"', 'required');
-      $this->form_validation->set_rules('tujuan', '"tujuan"', 'required');
-      $this->form_validation->set_rules('sasaran', '"sasaran"', 'required');
-      $this->form_validation->set_rules('deskripsi', '"deskripsi"', 'required');
+      $this->form_validation->set_rules('tujuan', '"tujuan"', 'required|max_lenth[50]');
+      $this->form_validation->set_rules('sasaran', '"sasaran"', 'required|max_length[50]');
+      $this->form_validation->set_rules('deskripsi', '"deskripsi"', 'required|max_length[100]');
       $this->form_validation->set_rules('bulan', '"bulan"', 'required');
 
-      $bulan = $this->input->post('bulan');
-
-      $yearnow = date('Y');
-      if ($bulan == "januari") {
-         $bulan = "$yearnow-01-15";
-      } elseif ($bulan == "februari") {
-         $bulan = "$yearnow-02-15";
-      } elseif ($bulan == "maret") {
-         $bulan = "$yearnow-03-15";
-      } elseif ($bulan == "april") {
-         $bulan = "$yearnow-04-15";
-      } elseif ($bulan == "mei") {
-         $bulan = "$yearnow-05-15";
-      } elseif ($bulan == "juni") {
-         $bulan = "$yearnow-06-15";
-      } elseif ($bulan == "juli") {
-         $bulan = "$yearnow-07-15";
-      } elseif ($bulan == "agustus") {
-         $bulan = "$yearnow-08-15";
-      } elseif ($bulan == "september") {
-         $bulan = "$yearnow-09-15";
-      } elseif ($bulan == "oktober") {
-         $bulan = "$yearnow-10-15";
-      } elseif ($bulan == "november") {
-         $bulan = "$yearnow-11-15";
-      } elseif ($bulan == "desember") {
-         $bulan = "$yearnow-11-15";
-      }
 
       if ($this->form_validation->run() == false) {
          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">isi data dengan benar!</div>');
       } else {
+         $nama_prog = $this->input->post('nama');
+         $data = array(
+            'nama_prog' => $nama_prog,
+            'deskripsi' => $this->input->post('deskripsi'),
+            'tujuan' => $this->input->post('tujuan'),
+            'sasaran' => $this->input->post('sasaran'),
+            'id_agenda' => $this->input->post('bulan')
+         );
+         // var_dump($data);   
+         $this->db->insert('program', $data);
+         $id_prog = $this->db->get_where('program',['nama_prog' => $nama_prog ])->row_array()['id'];
+         $data2 = array(
+            'id_prog' => $id_prog,
+            'dana_DKM' => $this->input->post('add_DKM'),
+            'dana_LKM' => $this->input->post('add_LKM'),
+            'dana_sponsor' => $this->input->post('add_sponsor'),
+            'dana_lain' => $this->input->post('add_dana_lain'),
+         );
+         $this->db->insert('sumber_dana_kegiatan',$data2);
+         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil ditambahkan!</div>');
+      }
+      redirect('Kegiatan/perencanaan');
+   }
+   public function showDataEditPerencanaan(){
+      $param1 = $this->input->post('id_program');
+      $perencanaan = $this->db->get_where('program', ['id' => $param1])->row_array();
+      if ($sumber_dana = $this->db->get_where('sumber_dana_kegiatan', ['id_prog' => $perencanaan['id']])->row_array()) {
+         $dana = $sumber_dana;
+      } else {
+         $dana = [
+            'dana_DKM' => "0",
+            'dana_LKM' => "0",
+            'dana_sponsor' => "0",
+            'dana_lain' => "0"
+         ];
+      }
+      $data = array(
+         'id' => $perencanaan['id'],
+         'dana_DKM' => $dana['dana_DKM'],
+         'dana_LKM' => $dana['dana_LKM'],
+         'dana_sponsor' => $dana['dana_sponsor'],
+         'dana_lain' => $dana['dana_lain'],
+         'nama_prog' => $perencanaan['nama_prog'],
+         'deskripsi' => $perencanaan['deskripsi'],
+         'tujuan' => $perencanaan['tujuan'],
+         'sasaran' => $perencanaan['sasaran'],
+         'id_agenda' => $perencanaan['id_agenda']
+      );
+      echo json_encode($data);
+   }
+   public function editPerencanaan(){
+      $rowid = $this->input->post('ROW_ID');
+
+      $this->form_validation->set_rules('nama', '"Nama"', 'required');
+      $this->form_validation->set_rules('deskripsi', '"Deskripsi"', 'required|max_length[100]');
+      $this->form_validation->set_rules('tujuan', '"Tujuan"', 'required|max_length[50]');
+      $this->form_validation->set_rules('sasaran', '"Sasaran"', 'required|max_length[50]');
+      if($this->form_validation->run()==false){
+         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">isi data dengan benar'.validation_errors().'</div>');
+      }else{
          $data = array(
             'nama_prog' => $this->input->post('nama'),
             'deskripsi' => $this->input->post('deskripsi'),
             'tujuan' => $this->input->post('tujuan'),
             'sasaran' => $this->input->post('sasaran'),
-            'id_agenda' => $bulan
+            'id_agenda' => $this->input->post('bulan')
          );
-         // var_dump($data);   
-         $this->db->insert('program', $data);
+         $where = ['id'=>$rowid];
+         $this->db->update('program',$data , $where);
+         $data2 = array(
+            'dana_DKM' => $this->input->post('dana_DKM'),
+            'dana_LKM' => $this->input->post('dana_LKM'),
+            'dana_sponsor' => $this->input->post('dana_sponsor'),
+            'dana_lain' => $this->input->post('dana_lain')
+         );
+         $where2 = ['id_prog' => $rowid];
+         $this->db->update('sumber_dana_kegiatan',$data2, $where2);
          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil ditambahkan!</div>');
       }
       redirect('Kegiatan/perencanaan');

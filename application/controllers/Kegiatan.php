@@ -16,6 +16,30 @@ class Kegiatan extends CI_Controller
     }
   public function perencanaan()
   {
+        $program = $this->db->get('program')->result_array();
+        foreach ($program as $row) {
+            $dt["id"] = $row['id'];
+            $dt["nama_prog"] = $row['nama_prog'];
+            $dt["deskripsi"] = $row['deskripsi'];
+            $dt["tujuan"] = $row['tujuan'];
+            $dt["sasaran"] = $row['sasaran'];
+            $dt["id_agenda"] = $row['id_agenda'];
+            if ($dana = $this->db->get_where('sumber_dana_kegiatan', ['id_prog' => $dt['id']])->row_array()) {
+                $dt["dana_keseluruhan"] = $dana['dana_DKM'] + $dana['dana_LKM'] + $dana['dana_sponsor'] + $dana['dana_lain'];
+                $dt['dana_DKM'] = $dana["dana_DKM"];
+                $dt['dana_LKM'] = $dana["dana_LKM"];
+                $dt['dana_sponsor'] = $dana["dana_sponsor"];
+                $dt['dana_lain'] = $dana["dana_lain"];
+            } else {
+                $dt["dana_keseluruhan"] = '0';
+                $dt['dana_DKM'] = '0';
+                $dt['dana_LKM'] = '0';
+                $dt['dana_sponsor'] = '0';
+                $dt['dana_lain'] = '0';
+            }
+            $data_table[] = $dt;
+        };
+        $data["perencanaan"] = $data_table;
       $data['user'] = $this->user_model->dataUser();
       $data['title'] = 'Perencanaan Program Kerja';
       $this->load->view('Templates/header', $data);
