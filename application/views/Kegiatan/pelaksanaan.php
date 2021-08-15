@@ -108,7 +108,7 @@
             <input type="number" class="form-control" id="dana_lkm" placeholder="dana lkm" name="dana_lkm">
           </div>
           <div class="form-group">
-            <input type="number" class="form-control" id="dana_lkm" placeholder="dana sponsor" name="dana_sponsor" title="isi jika ada">
+            <input type="number" class="form-control" id="dana_sponsor" placeholder="dana sponsor" name="dana_sponsor" title="isi jika ada">
           </div>
           <div class="form-group">
             <input type="number" class="form-control" id="dana_lain" placeholder="dana lain" name="dana_lain" title="isi jika ada">
