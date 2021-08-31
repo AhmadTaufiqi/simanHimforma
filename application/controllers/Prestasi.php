@@ -13,10 +13,6 @@ class Prestasi extends CI_Controller
   }
   public function index()
   {
-    $data['btn_add'] = ' ';
-    $data['action'] = 'hidden="true"';
-    $data['btn_edit'] = ' ';
-    $data['btn_delete'] = ' ';
     $data['user'] = $this->user_model->dataUser();
     $data['title'] = 'prestasi';
     $data['prestasi'] = $this->db->get('prestasi')->result_array();

@@ -18,7 +18,7 @@ class CrudKegiatan extends CI_Controller
 	{
 		echo "ahmad taufiqi muhsinin";
 	}
-	public function showDataTglComboKeg()
+	public function showDataComboPel()
 	{
 		$id_keg = $this->input->post('id_keg');
 		$data = $this->db->get_where('program', ['id' => $id_keg])->row_array();
@@ -30,6 +30,7 @@ class CrudKegiatan extends CI_Controller
 		$tgl_pelaksanaan = $this->input->post('tgl_pelaksanaan');
 		$nama_kegiatan = $this->input->post('nama_kegiatan');
 		$file_pelaksanaan = $_FILES['file']['name'];
+		$pelaksanaan = $this->db->get('pelaksanaan')->row_array();
 
 		$this->form_validation->set_rules('nama_kegiatan', 'Nama Kegiatan', 'required');
 		$this->form_validation->set_rules('option_kegiatan', 'Kegiatan', 'required');
@@ -156,8 +157,8 @@ class CrudKegiatan extends CI_Controller
 			'nama_kegiatan' => $this->input->post('nama'),
 			'file_proposal' => $new_file
 		);
-		$where = ['id'=> $rowid];
-		$this->db->update('pelaksanaan', $data , $where);
+		$where = ['id' => $rowid];
+		$this->db->update('pelaksanaan', $data, $where);
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil di edit!</div>');
 		redirect('Kegiatan/pelaksanaan');
@@ -190,34 +191,40 @@ class CrudKegiatan extends CI_Controller
 		$this->form_validation->set_rules('sasaran', '"sasaran"', 'required|max_length[50]');
 		$this->form_validation->set_rules('deskripsi', '"deskripsi"', 'required|max_length[100]');
 		$this->form_validation->set_rules('bulan', '"bulan"', 'required');
+		$nama_prog = $this->input->post('nama');
 
+		$program = $this->db->get_where('program', ['nama_prog' => $nama_prog])->result_array();
 
 		if ($this->form_validation->run() == false) {
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">isi data dengan benar!'.validation_errors().'</div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">isi data dengan benar!' . validation_errors() . '</div>');
 		} else {
-			$nama_prog = $this->input->post('nama');
-			$data = array(
-				'nama_prog' => $nama_prog,
-				'deskripsi' => $this->input->post('deskripsi'),
-				'tujuan' => $this->input->post('tujuan'),
-				'sasaran' => $this->input->post('sasaran'),
-				'id_agenda' => $this->input->post('bulan')
-			);
-			// var_dump($data);   
-			$this->db->insert('program', $data);
-			$id_prog = $this->db->get_where('program', ['nama_prog' => $nama_prog])->row_array()['id'];
-			$data2 = array(
-				'id_prog' => $id_prog,
-				'dana_DKM' => $this->input->post('add_DKM'),
-				'dana_LKM' => $this->input->post('add_LKM'),
-				'dana_sponsor' => $this->input->post('add_sponsor'),
-				'dana_lain' => $this->input->post('add_dana_lain'),
-			);
-			$this->db->insert('sumber_dana_kegiatan', $data2);
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil ditambahkan!</div>');
+			if (count($program) == 0) {
+				$data = array(
+					'nama_prog' => $nama_prog,
+					'deskripsi' => $this->input->post('deskripsi'),
+					'tujuan' => $this->input->post('tujuan'),
+					'sasaran' => $this->input->post('sasaran'),
+					'id_agenda' => $this->input->post('bulan')
+				);
+				// var_dump($data);   
+				$this->db->insert('program', $data);
+				$id_prog = $this->db->get_where('program', ['nama_prog' => $nama_prog])->row_array()['id'];
+				$data2 = array(
+					'id_prog' => $id_prog,
+					'dana_DKM' => $this->input->post('add_DKM'),
+					'dana_LKM' => $this->input->post('add_LKM'),
+					'dana_sponsor' => $this->input->post('add_sponsor'),
+					'dana_lain' => $this->input->post('add_dana_lain'),
+				);
+				$this->db->insert('sumber_dana_kegiatan', $data2);
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil ditambahkan!</div>');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">data sudah tersedia!</div>');
+			}
 		}
 		redirect('Kegiatan/perencanaan');
 	}
+
 	public function showDataEditPerencanaan()
 	{
 		$param1 = $this->input->post('id_program');
@@ -283,7 +290,7 @@ class CrudKegiatan extends CI_Controller
 		$pertanggungjwb = $this->db->get_where('pertanggungjwb', ['id_prog' => $id_del])->row_array();
 		$pelaksanaan = $this->db->get_where('pelaksanaan', ['id_prog' => $id_del])->row_array();
 		// delete perencanaan & dana
-		$this->db->delete('sumber_dana_kegiatan',['id_prog' => $id_del]);
+		$this->db->delete('sumber_dana_kegiatan', ['id_prog' => $id_del]);
 		$this->db->delete('program', ['id' => $id_del]);
 
 		if ($pelaksanaan) {
@@ -307,7 +314,7 @@ class CrudKegiatan extends CI_Controller
 		}
 		redirect('Kegiatan/perencanaan');
 	}
-	
+
 	public function showDataComboLPJ()
 	{
 		$id_keg = $this->input->post('id_keg');

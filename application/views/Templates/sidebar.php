@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark toggled" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('Dashboard')?>">
         <img class="img-icon" src="<?php echo base_url('assets/img/navbar_logo.svg') ?>" alt="">
         <div class="sidebar-brand-text">
             <p class="pt-3" style="font-size: small ;">Sistem Informasi Himforma</p>

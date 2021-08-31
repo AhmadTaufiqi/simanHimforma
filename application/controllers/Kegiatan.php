@@ -9,37 +9,22 @@ class Kegiatan extends CI_Controller
 		parent::__construct();
 		// $this->load->model('arsip_model');
 		$this->load->model('user_model');
+		$this->load->model('Kegiatan_model');
 		is_logged_in();
 	}
 	public function testingDummy2()
 	{
-		echo "ahmad taufiqi muhsinin";
+		$program = $this->db->get_where('program',['nama_prog' => "LKMMTPD"])->result_array();
+		if(count($program) == 0){
+			echo "true";
+		}else{
+			echo "false";
+		}
 	}
 	public function perencanaan()
 	{
-		$program = $this->db->get('program')->result_array();
-		foreach ($program as $row) {
-			$dt["id"] = $row['id'];
-			$dt["nama_prog"] = $row['nama_prog'];
-			$dt["deskripsi"] = $row['deskripsi'];
-			$dt["tujuan"] = $row['tujuan'];
-			$dt["sasaran"] = $row['sasaran'];
-			$dt["id_agenda"] = $row['id_agenda'];
-			if ($dana = $this->db->get_where('sumber_dana_kegiatan', ['id_prog' => $dt['id']])->row_array()) {
-				$dt["dana_keseluruhan"] = $dana['dana_DKM'] + $dana['dana_LKM'] + $dana['dana_sponsor'] + $dana['dana_lain'];
-				$dt['dana_DKM'] = $dana["dana_DKM"];
-				$dt['dana_LKM'] = $dana["dana_LKM"];
-				$dt['dana_sponsor'] = $dana["dana_sponsor"];
-				$dt['dana_lain'] = $dana["dana_lain"];
-			} else {
-				$dt["dana_keseluruhan"] = '0';
-				$dt['dana_DKM'] = '0';
-				$dt['dana_LKM'] = '0';
-				$dt['dana_sponsor'] = '0';
-				$dt['dana_lain'] = '0';
-			}
-			$data_table[] = $dt;
-		};
+		
+			$data_table = $this->Kegiatan_model->Program();
 		$data["perencanaan"] = $data_table;
 		$data['user'] = $this->user_model->dataUser();
 		$data['title'] = 'Perencanaan Program Kerja';
@@ -100,8 +85,16 @@ class Kegiatan extends CI_Controller
 			$dt["tgl_pelaksanaan"] = $row['tgl_pelaksanaan'];
 			if ($dana = $this->db->get_where('sumber_dana_kegiatan', ['id_pelaksanaan' => $dt['id']])->row_array()) {
 				$dt["dana_keseluruhan"] = $dana['dana_DKM'] + $dana['dana_LKM'] + $dana['dana_sponsor'] + $dana['dana_lain'];
+				$dt['dana_DKM'] = $dana['dana_DKM'];
+				$dt['dana_LKM'] = $dana['dana_LKM'];
+				$dt['dana_sponsor'] = $dana['dana_sponsor'];
+				$dt['dana_lain'] = $dana['dana_lain'];
 			} else {
 				$dt["dana_keseluruhan"] = '0';
+				$dt['dana_DKM'] = "0";
+				$dt['dana_LKM'] = "0";
+				$dt['dana_sponsor'] = "0";
+				$dt['dana_lain'] = "0";
 			}
 			$dt["deskripsi"] = $this->db->get_where('program', ['id' => $id_prog])->row_array()['deskripsi'];
 			$data_table[] = $dt;

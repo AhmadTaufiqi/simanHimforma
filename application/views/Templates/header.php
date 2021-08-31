@@ -13,7 +13,7 @@
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="<?= base_url('assets/') ?>kalender/tanggalan/fullcalendar/fullcalendar.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets/img/himforma.png')?>" />
+    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets/img/himforma.png') ?>" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
@@ -28,6 +28,7 @@
 
     <link href="<?php echo base_url('assets/'); ?>css/style.css" rel="stylesheet" type="text/css">
     <script src="<?php echo base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
+    <script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.js"></script>
 
 </head>
 

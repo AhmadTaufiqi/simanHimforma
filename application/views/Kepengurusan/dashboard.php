@@ -60,9 +60,39 @@
             </div>
         </div>
     </div>
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col" style="text-align:center;">
+                <!-- <div class="chart-area"> -->
+                <canvas id="myChart" width="200" height="100"></canvas>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
 
 </div>
 <!-- /.container-fluid -->
 
 </div>
+
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    // var linechart = document.getElementById("myLineChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            <?= $data_chart?>,
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
 <!-- End of Main Content -->

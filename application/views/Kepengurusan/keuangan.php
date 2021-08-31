@@ -8,23 +8,48 @@
   <?php echo $this->session->flashdata('message'); ?>
 
   <a href="" class="btn btn-primary btn-sm button-fixed btm-right-end" data-toggle="modal" data-target="#modalAngsuranKas"><i class="fas fa-plus-circle"></i> tambah data</a>
+
+  <div class="row mb-2">
+    <!-- <div class="col">
+      <div class="card p-3">tesss</div>
+    </div> -->
+    <div class="col-3 pr-1">
+      <div class="card p-2">
+        <h3 class="m-0"><?= $uang ?></h3>
+        <span>total uang kas</span>
+      </div>
+    </div>
+    <!-- <div class="col pl-2">
+      <div class="card p-3">
+        <h3>Rp. 50.000.000</h3>
+        <span>total uang kas</span>
+      </div>
+    </div> -->
+  </div>
+
   <div class="card shadow mb-4">
     <div class="card-body">
+      
+      <div hidden class="row text-align-center mb-2 filter_tanggal">
+        <input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
+        <input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
+      </div>
+
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>nama</th>
-              <th width="22%">tanggal & nominal</th>
-              <th width="20%">total</>
+              <th class="p-2">nama</th>
+              <th class="p-2" width="22%">tanggal & nominal</th>
+              <th class="p-2" width="20%">total</th>
             </tr>
           </thead>
           <tbody>
             <?php
             foreach ($pengurus as $ar) : ?>
               <tr>
-                <td><?= $ar['nama'] ?></td>
-                <td>
+                <td class="p-2"><?= $ar['nama'] ?></td>
+                <td class="p-2">
                   <div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       tanggal & nominal
@@ -37,7 +62,7 @@
                   </div>
                 </td>
 
-                <td>
+                <td class="p-2">
                   <?php
                   $this->db->select_sum('nominal');
                   $query = $this->db->get_where('kas_pengurus', ['id_pengurus' => $ar['id']])->row_array();

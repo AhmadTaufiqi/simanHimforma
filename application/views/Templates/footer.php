@@ -60,7 +60,6 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script src="<?php echo base_url('assets/') ?>kalender/tanggalan/jquery.min.js"></script>
 <script src="<?php echo base_url('assets/') ?>kalender/tanggalan/moment.js"></script>
 <script src="<?php echo base_url('assets/') ?>kalender/tanggalan/fullcalendar/fullcalendar.min.js"></script>
@@ -100,14 +99,53 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<!-- <script src="<?php echo base_url('assets/') ?>vendor/jquery/jquery.min.js"></script> -->
+
 <script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="<?= base_url('assets/') ?>js/demo/datatables-demo.js"></script>
 
+<script>
+    var minDate;
+    var maxDate;
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            // if ((minDate == "") && (maxDate) == "") {
+            var min = minDate.val();
+            var max = maxDate.val();
+            // }else{
+            //     var min = minDate;
+            //     var max = maxDate;
+            // }
+            var date = data[4];
+            if (
+                // (min === null && max === null) ||
+                (min == "" && max == "") ||
+                (min == "" && date <= max) ||
+                (min <= date && max == "") ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+    $(document).ready(function() {
+        minDate = $('#minDate');
+        maxDate = $('#maxDate');
+
+        // DataTables initialisation
+        var table = $('#dataTable').DataTable();
+
+        // Refilter the table
+        $('#minDate, #maxDate').on('change', function() {
+            table.draw();
+        });
+    });
+</script>
+
+<script src="<?= base_url('assets/') ?>js/demo/datatables-demo.js"></script>
 </body>
 
 </html>

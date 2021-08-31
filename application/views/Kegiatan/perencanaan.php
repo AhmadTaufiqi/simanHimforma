@@ -14,6 +14,17 @@
 	<a href="" class="btn btn-primary btn-sm button-fixed btm-right-end" data-toggle="modal" data-target="#modaltambahprog"><i class="fas fa-plus-circle"></i> tambah data</a>
 	<div class="card shadow mb-4">
 		<div class="card-body">
+			<div class="row text-align-center mb-2">
+				<div class="col"> </div>
+				<span>rentang tanggal : </span>
+				<div class="col-2">
+					<input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
+				</div>
+				<!-- <span> - </span> -->
+				<div class="col-2">
+					<input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
+				</div>
+			</div>
 			<div class="table-responsive">
 				<table class="table  table-bordered" id="dataTable" width="100%" cellspacing="">
 					<thead>

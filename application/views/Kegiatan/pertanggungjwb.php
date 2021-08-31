@@ -10,6 +10,10 @@
 	<a href="" class="btn btn-primary btn-sm button-fixed btm-right-end" data-toggle="modal" data-target="#modaltambahdokumen"><i class="fas fa-plus-circle"></i> tambah data</a>
 	<div class="card shadow mb-4">
 		<div class="card-body">
+			<div hidden class="row text-align-center mb-2 filter_tanggal">
+				<input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
+				<input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
+			</div>
 			<div class="table-responsive">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
@@ -201,7 +205,7 @@
 		// console.log("mantappps")
 		console.log(id_del)
 		Swal.fire({
-			icon:'question',
+			icon: 'question',
 			title: 'Are you sure?',
 			width: 400,
 			showCancelButton: true,

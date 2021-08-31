@@ -10,6 +10,10 @@
   <a href="" class="btn btn-primary btn-sm button-fixed btm-right-end" data-toggle="modal" data-target="#modaltambahdokumen"><i class="fas fa-plus-circle"></i> tambah data</a>
   <div class="card shadow mb-4">
     <div class="card-body">
+      <div hidden class="row text-align-center mb-2 filter_tanggal">
+        <input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
+        <input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
+      </div>
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -36,7 +40,19 @@
                             <div class="list-group list-group-flush">
                               <li class="list-group-item p-1"><span class="text-primary">Nama File : </span><?= $ar['file_proposal'] ?></li>
                               <li class="list-group-item p-1 "><span class="text-primary">tanggal pelaksanaan : </span><?= $ar['tgl_pelaksanaan'] ?> </li>
-                              <li class="list-group-item p-1 "><span class="text-primary">dana keseluruhan : </span>Rp. <?= number_format($ar['dana_keseluruhan'], 0, ',', '.') ?> </li>
+                              <li class="list-group-item p-1 "><span class="text-primary">dana keseluruhan : </span>
+                              <!-- <div class="dropdown"> -->
+                                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <?= number_format($ar['dana_keseluruhan'], 0, ',', '.') ?>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="#">dana DKM : <?= number_format($ar['dana_DKM'], 0, ',', '.') ?></a>
+                                  <a class="dropdown-item" href="#">dana LKM : <?= number_format($ar['dana_LKM'], 0, ',', '.') ?></a>
+                                  <a class="dropdown-item" href="#">dana Sponsor : <?= number_format($ar['dana_sponsor'], 0, ',', '.') ?></a>
+                                  <a class="dropdown-item" href="#">dana lain : <?= number_format($ar['dana_lain'], 0, ',', '.') ?></a>
+                                </div>
+                              <!-- </div> -->
+                            </li>
                               <!-- <li class="list-group-item px-1"><span class="text-primary">Status :</span> TERLAKSANA</li> -->
                             </div>
                           </div>
@@ -217,7 +233,7 @@
       data: {
         id_keg: id_keg
       },
-      url: '<?php echo base_url('crudKegiatan/showDataTglComboKeg') ?>',
+      url: '<?php echo base_url('crudKegiatan/showDataComboPel') ?>',
       success: function(data) {
         var result = JSON.parse(data)
         // console.log(result)

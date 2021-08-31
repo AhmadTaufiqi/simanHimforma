@@ -12,6 +12,17 @@
     <!-- <iframe src="<?php echo base_url('calendar/tb_calendar') ?>" frameborder="1" height="600px"></iframe> -->
     <div class="card shadow mb-4">
         <div class="card-body">
+            <div class="row text-align-center mb-2 filter_tanggal">
+                <div class="col "> </div>
+                <span>rentang tanggal : </span>
+                <div class="col-2">
+                    <input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
+                </div>
+                <!-- <span> - </span> -->
+                <div class="col-2">
+                    <input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>

@@ -9,42 +9,42 @@ class Kepengurusan extends CI_Controller
         parent::__construct();
         // $this->load->model('arsip_model');
         $this->load->model('user_model');
+        $this->load->model('Kegiatan_model');
         is_logged_in();
     }
 
-    public function index()
-    {
-        $data['user'] = $this->user_model->dataUser();
-        $data['title'] = 'Dashboard';
-
-        $this->load->view('Templates/header', $data);
-        $this->load->view('Templates/sidebar', $data);
-        $this->load->view('Templates/topbar', $data);
-        $this->load->view('Kepengurusan/dashboard', $data);
-        $this->load->view('Templates/footer');
-    }
-
+    
     public function pengurus()
     {
         $data['user'] = $this->user_model->dataUser();
         $data['pengurus'] = $this->db->get_where('pengurus')->result_array();
         $data['title'] = 'Pengurus';
-
+        
         $this->load->view('Templates/header', $data);
         $this->load->view('Templates/sidebar', $data);
         $this->load->view('Templates/topbar', $data);
         $this->load->view('Kepengurusan/pengurus', $data);
         $this->load->view('Templates/footer');
     }
-
+    
     public function keuangan()
     {
         $data['user'] = $this->user_model->dataUser();
+        $data['dashboard'] = "Kepengurusan";
         $yearnow = date('Y');
         $where = '(periode1=' . $yearnow . ' or periode2 = ' . $yearnow . ')';
         $data['pengurus'] = $this->db->get_where('pengurus', $where)->result_array();
+        foreach($data['pengurus'] as $ar){
+            $this->db->select_sum('nominal');
+            $kas = $this->db->get_where('kas_pengurus', ['id_pengurus' => $ar['id']])->row_array();
+            $data2 = $kas['nominal'];
+            
+            // $data2[] = $kas['nominal'];
+            $uang[] = $data2;
+        }
+        $data['uang'] = array_sum($uang);
         $data['title'] = 'Keuangan';
-
+        
         $this->load->view('Templates/header', $data);
         $this->load->view('Templates/sidebar', $data);
         $this->load->view('Templates/topbar', $data);
@@ -69,16 +69,17 @@ class Kepengurusan extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data kas berhasil dihapus!</div>');
         redirect('Kepengurusan/keuangan');
     }
-
+    
     public function inventaris()
     {
         $data['user'] = $this->user_model->dataUser();
         $data['title'] = 'inventaris';
-
+        $data['dashboard'] = "Kepengurusan";
+        
         $this->form_validation->set_rules('nama_barang', '"nama barang"', 'required');
         $this->form_validation->set_rules('jumlah_barang', '"jumlah barang"', 'required');
         $this->form_validation->set_rules('kondisi', '"kondisi"', 'required');
-
+        
         $this->load->view('Templates/header', $data);
         $this->load->view('Templates/sidebar', $data);
         $this->load->view('Templates/topbar', $data);
@@ -103,7 +104,7 @@ class Kepengurusan extends CI_Controller
         }
         redirect('Kepengurusan/inventaris');
     }
-
+    
     function delete_inventaris($id)
     {
         $this->db->where('id', $id);

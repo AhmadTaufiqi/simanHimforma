@@ -2,7 +2,7 @@
 
 
   <?php echo $this->session->flashdata('message'); ?>
-  <a href="" class="btn btn-primary btn-sm button-fixed btm-right-end" data-toggle="modal" data-target="#modaltambahPrestasi"><i class="fas fa-plus-circle"></i> Tambah prestasi</a>
+  <button type="button" aria-label="print" id="print_prestasi" class="btn btn-info btn-sm button-fixed btm-right-end"><i class="fas fa-print"></i> cetak prestasi</button>
 
 
   <div class="card shadow mb-4">
@@ -27,9 +27,8 @@
               <th>Prestasi</th>
               <th>peraih prestasi</th>
               <th width="10%">NPM</th>
-              <th aria-label="-" width="12%"><span>YYYY/</span><span>MM </span></th>
+              <th width="12%">tanggal</th>
               <th width="20%">keterangan</th>
-              <th width="10%">Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -41,10 +40,6 @@
                 <td><?= $pr['npm'] ?></td>
                 <td><?= $pr['tanggal_prestasi'] ?></td>
                 <td><?= $pr['keterangan'] ?></td>
-                <td>
-                  <a href="edit" class="btn btn-sm text-info"><i class="fas fa-edit"></i> edit</a>
-                  <a href="#" id="<?= $pr['id'] ?>" class="btn btn-sm text-danger swal-delete"><i class="fas fa-trash"></i> delete</a>
-                </td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -121,5 +116,18 @@
         console.log(id_del)
       }
     })
+  })
+</script>
+
+<script>
+  $('#print_prestasi').click(function () {
+    console.log("mantap")
+    var printme = document.getElementById('dataTable');
+    var wme = window.open("","","width=900","height=700");
+    wme.document.write(printme.outerHTML);
+    wme.document.close();
+    wme.focus();
+    wme.print();
+    wme.close();
   })
 </script>

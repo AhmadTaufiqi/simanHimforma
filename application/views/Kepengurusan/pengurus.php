@@ -7,6 +7,12 @@
 
   <div class="card shadow mb-4">
     <div class="card-body">
+
+      <div hidden class="row text-align-center mb-2 filter_tanggal">
+        <input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
+        <input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
+      </div>
+
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
@@ -29,8 +35,8 @@
                 <td><?php echo $dt['periode1']; ?></td>
                 <td><?php echo $dt['periode2']; ?></td>
                 <td>
-                  <a href="<?php echo base_url('user/edit_pengurus/') . $dt['id']; ?>" class="btn btn-sm text-info"><i class="fas fa-sm fa-edit"></i> update</a>
-                  <a href="<?php echo base_url('Kepengurusan/delete_pengurus/') . $dt['id']; ?>" class="btn btn-sm text-danger"><i class="fas fa-sm fa-trash"></i> delete</a>
+                  <a href="<?php echo base_url('Crudkepengurusan/editPengurus/') . $dt['id']; ?>" class="btn btn-sm text-info"><i class="fas fa-sm fa-edit"></i> update</a>
+                  <a href="<?php echo base_url('Crudkepengurusan/delPengurus/') . $dt['id']; ?>" class="btn btn-sm text-danger"><i class="fas fa-sm fa-trash"></i> delete</a>
                 </td>
               </tr>
 
@@ -53,7 +59,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="<?php echo base_url('user/pengurus'); ?>" method="post">
+      <form action="<?php echo base_url('CrudKepengurusan/addpengurus'); ?>" method="post">
         <div class="modal-body">
 
           <div class="custom-file mb-3">
@@ -66,10 +72,10 @@
             <input type="text" class="form-control" id="jumlah_barang" name="jumlah_barang" placeholder="nama lengkap">
           </div>
           <div class="form-group">
-            <input type="number" class="form-control" id="kondisi" name="kondisi" placeholder="semester">
+            <input type="number" class="form-control" id="semester" name="semester" placeholder="semester">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="kondisi" name="kondisi" placeholder="periode">
+            <input type="text" class="form-control" id="periode" name="periode" placeholder="periode">
           </div>
         </div>
         <div class="modal-footer">

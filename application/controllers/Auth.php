@@ -51,12 +51,12 @@ class Auth extends CI_Controller
 					'role_id' => $user['role_id']
 				];
 				$this->session->set_userdata($data);
-				// redirect('user');
-				if ($user['role_id'] == 1) {
-					redirect('pengawas');
-				} else {
-					redirect('Kepengurusan');
-				}
+				redirect('Dashboard');
+				// if ($user['role_id'] == 1) {
+				// 	redirect('Dashboard');
+				// } else {
+				// 	redirect('Dashboard');
+				// }
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 					wrong password </div>');
@@ -68,50 +68,6 @@ class Auth extends CI_Controller
 			redirect('auth');
 		}
 	}
-
-
-	public function register()
-	{
-		
-		if ($this->session->userdata('email')) {
-			redirect('user');
-		}
-
-
-		$this->form_validation->set_rules('name', 'Name', 'required|trim');
-		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
-			'is_unique' => 'the email has been registered'
-		]);
-
-		$this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[3]|matches[password2]', [
-			'matches' => 'password dont match!',
-			'min_length' => 'password too short!'
-		]);
-		$this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
-
-		if ($this->form_validation->run() == false) {
-			$data['title'] = 'REGISTER SYSTEM';
-			$this->load->view('Templates/auth_header', $data);
-			$this->load->view('Auth/register');
-			$this->load->view('Templates/auth_footer');
-		} else {
-			$email = $this->input->post('email', true);
-			$data = [
-				'name' => htmlspecialchars($this->input->post('name', true)),
-				'email' => htmlspecialchars($email),
-				'image' => 'default.jpg',
-				'password' => md5($this->input->post('password1')),
-				'is_active' => 1,
-				'date_created' => time()
-
-			];
-			$this->db->insert('user', $data);
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-			Your account has been registered' . $email . ' </div>');
-			redirect('auth');
-		}
-	}
-
 
 
 	public function logout()
