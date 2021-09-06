@@ -6,9 +6,9 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 		if ($this->session->userdata('role_id') == 1) {
-			redirect('pengawas');
+			redirect('dashboard');
 		} else if($this->session->userdata('role_id') == 2) {
-			redirect('Kepengurusan');
+			redirect('dashboard');
 		}
 	}
 	public function index()

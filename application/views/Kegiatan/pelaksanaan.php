@@ -41,7 +41,7 @@
                               <li class="list-group-item p-1"><span class="text-primary">Nama File : </span><?= $ar['file_proposal'] ?></li>
                               <li class="list-group-item p-1 "><span class="text-primary">tanggal pelaksanaan : </span><?= $ar['tgl_pelaksanaan'] ?> </li>
                               <li class="list-group-item p-1 "><span class="text-primary">dana keseluruhan : </span>
-                              <!-- <div class="dropdown"> -->
+                                <!-- <div class="dropdown"> -->
                                 <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <?= number_format($ar['dana_keseluruhan'], 0, ',', '.') ?>
                                 </button>
@@ -51,8 +51,8 @@
                                   <a class="dropdown-item" href="#">dana Sponsor : <?= number_format($ar['dana_sponsor'], 0, ',', '.') ?></a>
                                   <a class="dropdown-item" href="#">dana lain : <?= number_format($ar['dana_lain'], 0, ',', '.') ?></a>
                                 </div>
-                              <!-- </div> -->
-                            </li>
+                                <!-- </div> -->
+                              </li>
                               <!-- <li class="list-group-item px-1"><span class="text-primary">Status :</span> TERLAKSANA</li> -->
                             </div>
                           </div>
@@ -101,7 +101,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <?php echo form_open_multipart('crudKegiatan/addPelaksanaan'); ?>
+        <?php echo form_open_multipart('CrudKegiatan/addPelaksanaan'); ?>
         <div class="modal-body">
           <div class="form-group">
             <select class="form-control option_kegiatan" name="option_kegiatan">
@@ -151,7 +151,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <?php echo form_open_multipart('crudKegiatan/editPelaksanaan'); ?>
+        <?php echo form_open_multipart('CrudKegiatan/editPelaksanaan'); ?>
         <div class="modal-body">
           <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="" hidden="true">
           <div class="form-group">
@@ -209,7 +209,7 @@
       data: {
         id_program: id_program
       },
-      url: '<?= base_url('crudKegiatan/showDataEditPelaksanaan') ?>',
+      url: '<?= base_url('CrudKegiatan/showDataEditPelaksanaan') ?>',
       success: function(data) {
         var objectResult = JSON.parse(data)
         console.log(objectResult);
@@ -233,7 +233,7 @@
       data: {
         id_keg: id_keg
       },
-      url: '<?php echo base_url('crudKegiatan/showDataComboPel') ?>',
+      url: '<?php echo base_url('CrudKegiatan/showDataComboPel') ?>',
       success: function(data) {
         var result = JSON.parse(data)
         // console.log(result)
@@ -262,7 +262,7 @@
 
 
       if (result.value == true) {
-        window.location = '<?php echo base_url('crudKegiatan/deletePelaksanaan/') ?>' + id_del;
+        window.location = '<?php echo base_url('CrudKegiatan/deletePelaksanaan/') ?>' + id_del;
         console.log(id_del)
       }
     })

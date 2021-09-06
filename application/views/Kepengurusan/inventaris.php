@@ -8,8 +8,8 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div hidden class="row text-align-center mb-2 filter_tanggal">
-                    <input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
-                    <input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
+                <input type="date" id="minDate" name="minDate" class="form-control form-control-sm">
+                <input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm">
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -30,7 +30,7 @@
                                 <td><?php echo $ivt['jumlah_barang']; ?></td>
                                 <td><?php echo $ivt['kondisi']; ?></td>
                                 <td>
-                                    <a href="#" class="btn btn-sm text-info"><i class="fas fa-sm fa-edit"></i> update</a>
+                                    <a class="btn btn-sm text-info" data-toggle="modal" data-target="#modalEditIvt"><i class="fas fa-sm fa-edit"></i> update</a>
                                     <a href="<?php echo base_url('CrudKepengurusan/delete_inventaris/') . $ivt['id']; ?>" class="btn btn-sm text-danger"><i class="fas fa-sm fa-trash"></i> delete</a>
                                 </td>
                             </tr>
@@ -46,6 +46,37 @@
 
 
 
+</div>
+<div class="modal fade" id="modalEditIvt" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEdit">edit data kegiatan terlaksana</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?php echo base_url('CrudKepengurusan/addInventaris'); ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="nama barang">
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" id="jumlah_barang" name="jumlah_barang" placeholder="jumlah barang">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="kondisi" name="kondisi" placeholder="kondisi">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="modaltambahinventaris" tabindex="-1" role="dialog" aria-labelledby="modalsubmenulabel" aria-hidden="true">

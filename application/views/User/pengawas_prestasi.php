@@ -121,13 +121,14 @@
 
 <script>
   $('#print_prestasi').click(function () {
-    console.log("mantap")
-    var printme = document.getElementById('dataTable');
-    var wme = window.open("","","width=900","height=700");
-    wme.document.write(printme.outerHTML);
-    wme.document.close();
-    wme.focus();
-    wme.print();
-    wme.close();
+    // console.log("mantap")
+    // var printme = document.getElementById('dataTable');
+    window.print();
+    // var wme = window.open("","","width=900","height=700");
+    // wme.document.print(printme);
+    // wme.document.close();
+    // wme.focus();
+    // wme.print();
+    // wme.close();
   })
 </script>
