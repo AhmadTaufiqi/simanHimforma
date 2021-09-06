@@ -22,7 +22,7 @@ class Pengawas extends CI_Controller
         $this->load->view('Templates/header', $data);
         $this->load->view('Templates/sidebar', $data);
         $this->load->view('Templates/topbar', $data);
-        $this->load->view('User/pengawas_prestasi', $data);
+        $this->load->view('Pengawas/pengawas_prestasi', $data);
         $this->load->view('Templates/footer');
     }
     public function lapKegiatan(){

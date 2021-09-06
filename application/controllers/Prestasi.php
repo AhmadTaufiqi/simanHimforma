@@ -19,7 +19,7 @@ class Prestasi extends CI_Controller
     $this->load->view('Templates/header', $data);
     $this->load->view('Templates/sidebar', $data);
     $this->load->view('Templates/topbar', $data);
-    $this->load->view('User/prestasi', $data);
+    $this->load->view('Kepengurusan/prestasi', $data);
     $this->load->view('Templates/footer');
   }
   public function addPrestasi()
@@ -46,7 +46,7 @@ class Prestasi extends CI_Controller
         } else {
           // $tes = $this->upload->display_errors();
           $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">file tidak sesuai !</div>');
-          redirect('prestasi');
+          redirect('Prestasi');
         }
       }
       $data = [
@@ -62,7 +62,7 @@ class Prestasi extends CI_Controller
       $this->db->insert('prestasi', $data);
       $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil di input!</div>');
     }
-    redirect('prestasi');
+    redirect('Prestasi');
   }
 
   public function deletePrestasi($id_del)
@@ -76,6 +76,6 @@ class Prestasi extends CI_Controller
     unlink(FCPATH . 'assets/img/foto_prestasi/' . $current_foto);
 
     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil hapus!</div>');
-    redirect('prestasi');
+    redirect('Presatasi');
   }
 }
