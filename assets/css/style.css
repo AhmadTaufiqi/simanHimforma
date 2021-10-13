@@ -1,0 +1,113 @@
+.carousel-custom-jumbotron {
+    height: 50vh;
+    min-height: 350px;
+    border-radius: .35rem;
+    background: no-repeat center center scroll ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .img-brand{
+    width: 100%;
+    margin-bottom: -8px;
+  }
+
+  .img-icon{
+    margin-top: -10px;
+    width: 40px;
+  }
+
+  .table-calendar td{
+    max-width: 30px;
+  }
+
+  .highlight{
+    font-weight: 800;
+    font-size: large;
+  }
+
+  /* style for calendar */
+  .fc-title{
+    color: rgb(255, 255, 255);
+  }
+  .fc-event{
+    border-radius: 20px;
+    padding: 0 10px;
+  }
+.button-fixed{
+  position:fixed;
+  z-index: 99;
+  padding: 5px 9px;
+  /* border-radius: 15px; */
+  /* box-shadow: 0 0 15px rgb(0,0,0,0.3); */
+}
+.shadow2{
+  box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
+  border: none;
+}
+
+.btm-right-end{
+  right: 30px;
+  bottom: 60px;
+}
+.right{
+  position:fixed;
+  z-index: 99;
+  right: 0;
+    width: 0; 
+    height: 0; 
+    
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent; 
+    border-right:40px solid;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+.right i{
+  color: white;
+  margin-left: 8px;
+}
+.delete-pelaksanaan{
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+th {
+  vertical-align: middle !important;
+}
+.swal-delete , .edit-button2{
+  cursor: pointer;
+}
+.topbar{
+  height: 3.6rem;
+}
+
+.sticky-button-home{
+  position: absolute;
+  z-index: 99;
+  /* background-color: blue; */
+  /* top:0;
+  left:0; */
+}
+@media (min-width: 768px){
+
+  .sidebar.toggled {
+    overflow: visible;
+    width: 5.5rem !important;
+  }
+
+  .sidebar.toggled .nav-item .nav-link{
+    overflow: visible;
+    width: 5.5rem;
+  }
+}
+/* 
+.small {
+  margin-bottom: 15px;
+} */
+.small p {
+  margin: 2px 5px;
+}
