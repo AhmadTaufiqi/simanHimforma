@@ -11,7 +11,7 @@ class Dashboard extends CI_Controller
     $this->load->model('user_model');
     $this->load->model('Kegiatan_model');
     if (!$this->session->userdata('email')) {
-      redirect('welcome');
+      redirect('LandingPage');
     }
   }
 
