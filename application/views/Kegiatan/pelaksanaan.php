@@ -61,10 +61,10 @@
                       </div>
                       <div class="delete-pelaksanaan">
 
-                        <a class="btn btn-sm edit-button2" id="<?= $ar['id'] ?>" style="text-align:left;" data-toggle="modal" data-target="#modalEditProg">
+                        <a class="btn btn-sm edit-button2" id="<?= $ar['id_pelaksanaan'] ?>" style="text-align:left;" data-toggle="modal" data-target="#modalEditProg">
                           <i class="fas fa-edit text-info"></i>
                         </a>
-                        <a class="btn btn-sm swal-delete" id="<?= $ar['id'] ?>">
+                        <a class="btn btn-sm swal-delete" id="<?= $ar['id_pelaksanaan'] ?>">
                           <i class="fas fa-trash text-danger"></i>
                         </a>
                         <!-- <a href="btn btn-sm">
@@ -101,13 +101,13 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <?php echo form_open_multipart('CrudKegiatan/addPelaksanaan'); ?>
+        <?php echo form_open_multipart('Pelaksanaan/addPelaksanaan'); ?>
         <div class="modal-body">
           <div class="form-group">
             <select class="form-control option_kegiatan" name="option_kegiatan">
               <option selected="true" disabled="true">pilih program</option>
               <?php foreach ($program->result_array() as $pr) : ?>
-                <option class="option_prog" value="<?= $data["value"] = $pr['id'] ?>"><?= $pr['nama_prog'] ?></option>
+                <option class="option_prog" value="<?= $data["value"] = $pr['id_perencanaan'] ?>"><?= $pr['nama_kegiatan'] ?></option>
 
               <?php endforeach; ?>
             </select>
@@ -151,9 +151,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <?php echo form_open_multipart('CrudKegiatan/editPelaksanaan'); ?>
+        <?php echo form_open_multipart('Pelaksanaan/editPelaksanaan'); ?>
         <div class="modal-body">
-          <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="" hidden="true">
+          <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="" hidden>
           <div class="form-group">
             <label>nama kegiatan</label>
             <input type="text" class="form-control" id="NAMA_KEGIATAN" name="nama" readonly>
@@ -209,11 +209,11 @@
       data: {
         id_program: id_program
       },
-      url: '<?= base_url('CrudKegiatan/showDataEditPelaksanaan') ?>',
+      url: '<?= base_url('Pelaksanaan/showDataEditPelaksanaan') ?>',
       success: function(data) {
         var objectResult = JSON.parse(data)
         console.log(objectResult);
-        $("#ROW_ID").val(objectResult.id);
+        $("#ROW_ID").val(objectResult.id_pelaksanaan);
         $("#NAMA_KEGIATAN").val(objectResult.nama_kegiatan);
         $("#edit_DKM").val(objectResult.dana_DKM);
         $("#edit_LKM").val(objectResult.dana_LKM);
@@ -233,12 +233,12 @@
       data: {
         id_keg: id_keg
       },
-      url: '<?php echo base_url('CrudKegiatan/showDataComboPel') ?>',
+      url: '<?php echo base_url('Pelaksanaan/showDataComboPel') ?>',
       success: function(data) {
         var result = JSON.parse(data)
         // console.log(result)
-        $("#date-control").val(result.id_agenda);
-        $("#nama_kegiatan").val(result.nama_prog);
+        $("#date-control").val(result.tgl_perencanaan);
+        $("#nama_kegiatan").val(result.nama_kegiatan);
       }
     })
   })
@@ -262,7 +262,7 @@
 
 
       if (result.value == true) {
-        window.location = '<?php echo base_url('CrudKegiatan/deletePelaksanaan/') ?>' + id_del;
+        window.location = '<?php echo base_url('Pelaksanaan/deletePelaksanaan/') ?>' + id_del;
         console.log(id_del)
       }
     })

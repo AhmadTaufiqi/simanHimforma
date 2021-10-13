@@ -25,14 +25,14 @@
                     <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password">
                     <?php echo form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
                   </div>
-
+                  
                   <button type="submit" class="btn btn-primary btn-user btn-block">
                     Login
                   </button>
                   <hr>
-                  <!-- <div class="text-center">
-                    <a class="small" href="<?php echo base_url('auth/register'); ?>">Create an Account!</a>
-                  </div> -->
+                  <div class="text-center">
+                    <a class="small" href="<?= base_url('Auth/ForgotPassword')?>">Lupa Password ?</a>
+                  </div>
               </div>
             </>
           </div>

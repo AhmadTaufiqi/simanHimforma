@@ -1,51 +1,46 @@
-<!-- Content Wrapper -->
+<div class="container">
 
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
 
-<!-- Begin Page Content -->
-<div class="container-fluid">
+    <div class="col-lg-7">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"><?php echo $title; ?></h1>
-    <div class="row">
-        <div class="col-lg-6">
-            <?php echo $this->session->flashdata('message'); ?>
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+
+          <div class="row">
+            <div class="col-lg">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">LOGIN</h1>
+                </div>
+                <?php echo $this->session->flashdata('message') ?>
+                <form class="user" method="post" action="<?php echo base_url('auth'); ?>">
+                  <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="email" id="email" placeholder="Enter Email Address..." value="<?php echo set_value('email') ?>">
+                    <?php echo form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+                  <div class=" form-group">
+                    <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password">
+                    <?php echo form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary btn-user btn-block">
+                    Login
+                  </button>
+                  <hr>
+                  <div class="text-center">
+                    <a class="small" href="<?= base_url('Auth/forgot_password')?>">Lupa Password ?</a>
+                  </div>
+              </div>
+            </>
+          </div>
         </div>
+      </div>
+
     </div>
 
-    <div class="card" style="max-width:400px;">
-        <div class="row mx-3">
-            <div class="col-lg-12">
-                <form action="<?php echo base_url('user/editpassword'); ?>" method="post">
-                    <div class="form-group mt-3">
-                        <label for="current_password">current password</label>
-                        <input class="form-control" type="password" name="current_password" id="current_password">
-                        <?php echo form_error('current_password', '<small class="text-danger pl-3">', '</small>'); ?>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="current_password">current password</label>
-                        <input class="form-control" type="password" name="new_password1" id="new_password1">
-                        <?php echo form_error('new_password1', '<small class="text-danger pl-3">', '</small>'); ?>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="current_password">current password</label>
-                        <input class="form-control" type="password" name="new_password2" id="new_password2">
-                        <?php echo form_error('new_password2', '<small class="text-danger pl-3">', '</small>'); ?>
-                    </div>
-
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
+  </div>
 
 </div>
-<!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->

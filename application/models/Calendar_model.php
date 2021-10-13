@@ -4,7 +4,7 @@ class Calendar_model extends CI_Model
 {
     function fetch_event()
     {
-        $this->db->order_by('id');
-        return $this->db->get('kalender');
+        $this->db->order_by('id_pelaksanaan');
+        return $this->db->get('Pelaksanaan');
     }
 }

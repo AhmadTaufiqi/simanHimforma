@@ -48,11 +48,11 @@
 					<tbody>
 						<?php foreach ($perencanaan as $ar) : ?>
 							<tr>
-								<td class="p-1"><?php echo $ar['nama_prog'] ?></td>
+								<td class="p-1"><?php echo $ar['nama_kegiatan'] ?></td>
 								<td class="p-1"><?php echo $ar['deskripsi'] ?></td>
 								<td class="p-1"><?php echo $ar['tujuan'] ?></td>
 								<td class="p-1"><?php echo $ar['sasaran'] ?></td>
-								<td class="p-1"><?php echo substr($ar['id_agenda'], 0, 7) ?></td>
+								<td class="p-1"><?php echo substr($ar['tgl_perencanaan'], 0, 7) ?></td>
 
 								<td class="text-right p-1">
 									<div class="dropdown">
@@ -77,8 +77,8 @@
 								<td class="p-1 text-center">
 									<ul class="p-2">
 
-										<a data-toggle="modal" data-target="#modalEditProg" title="edit" href="#" id="<?= $ar['id'] ?>" class=" edit-button2 btn p-1 text-info"><i class="fas fa-sm fa-edit"></i></a>
-										<a title="hapus" id="<?= $ar['id']; ?>" class="btn p-1 text-danger swal-delete"><i class="fas fa-sm fa-trash"></i></a>
+										<a data-toggle="modal" data-target="#modalEditProg" title="edit" href="#" id="<?= $ar['id_perencanaan'] ?>" class=" edit-button2 btn p-1 text-info"><i class="fas fa-sm fa-edit"></i></a>
+										<a title="hapus" id="<?= $ar['id_perencanaan']; ?>" class="btn p-1 text-danger swal-delete"><i class="fas fa-sm fa-trash"></i></a>
 									</ul>
 								</td>
 							</tr>
@@ -102,19 +102,19 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="<?= base_url('crudKegiatan/addProgram') ?>" method="post">
+				<form action="<?= base_url('Perencanaan/addPerencanaan') ?>" method="post">
 					<div class="modal-body">
 						<div class="form-group">
-							<input type="text" class="form-control" id="nama" name="nama" placeholder="nama program">
+							<input type="text" class="form-control" id="nama" name="nama" placeholder="nama program" maxlength="50">
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="tujuan">
+							<input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="tujuan" maxlength="50">
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" id="sasaran" name="sasaran" placeholder="sasaran">
+							<input type="text" class="form-control" id="sasaran" name="sasaran" placeholder="sasaran" maxlength="50">
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="deskripsi">
+							<input type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="deskripsi" maxlength="100">
 						</div>
 						<div class="form-group">
 							<input class="form-control" type="date" name="bulan" title="pilih estimasi bulan pelaksanaan" id="bulan">
@@ -150,7 +150,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="<?php echo base_url('CrudKegiatan/editPerencanaan') ?>" method="post">
+				<form action="<?php echo base_url('Perencanaan/editPerencanaan') ?>" method="post">
 					<div class="modal-body">
 						<input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="" hidden>
 						<div class="form-group">
@@ -215,16 +215,16 @@
 			data: {
 				id_program: id_program
 			},
-			url: '<?= base_url('CrudKegiatan/showDataEditPerencanaan') ?>',
+			url: '<?= base_url('Perencanaan/showDataEditPerencanaan') ?>',
 			success: function(data) {
 				var objectResult = JSON.parse(data)
 				console.log(objectResult);
-				$("#ROW_ID").val(objectResult.id);
-				$("#NAMA_KEGIATAN").val(objectResult.nama_prog);
+				$("#ROW_ID").val(objectResult.id_perencanaan);
+				$("#NAMA_KEGIATAN").val(objectResult.nama_kegiatan);
 				$("#edit_deskripsi").val(objectResult.deskripsi);
 				$("#edit_tujuan").val(objectResult.tujuan);
 				$("#edit_sasaran").val(objectResult.sasaran);
-				$("#edit_bulan").val(objectResult.id_agenda);
+				$("#edit_bulan").val(objectResult.tgl_perencanaan);
 				$("#edit_DKM").val(objectResult.dana_DKM);
 				$("#edit_LKM").val(objectResult.dana_LKM);
 				$("#edit_sponsor").val(objectResult.dana_sponsor);
@@ -250,7 +250,7 @@
 		}).then((result) => {
 
 			if (result.value == true) {
-				window.location = '<?php echo base_url('crudKegiatan/deletePerencanaan/') ?>' + id_del;
+				window.location = '<?php echo base_url('Perencanaan/deletePerencanaan/') ?>' + id_del;
 			}
 		})
 	})

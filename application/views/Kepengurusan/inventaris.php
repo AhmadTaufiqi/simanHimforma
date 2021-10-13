@@ -30,8 +30,8 @@
                                 <td><?php echo $ivt['jumlah_barang']; ?></td>
                                 <td><?php echo $ivt['kondisi']; ?></td>
                                 <td>
-                                    <a class="btn btn-sm text-info" data-toggle="modal" data-target="#modalEditIvt"><i class="fas fa-sm fa-edit"></i> update</a>
-                                    <a href="<?php echo base_url('CrudKepengurusan/delete_inventaris/') . $ivt['id']; ?>" class="btn btn-sm text-danger"><i class="fas fa-sm fa-trash"></i> delete</a>
+                                    <a id="<?= $ivt['id_ivt'] ?>" class="btn btn-sm text-info edit-button2" data-toggle="modal" data-target="#modalEditIvt"><i class="fas fa-sm fa-edit"></i> update</a>
+                                    <a id="<?= $ivt['id_ivt']?>" class="btn btn-sm text-danger swal-delete"><i class="fas fa-sm fa-trash"></i> delete</a>
                                 </td>
                             </tr>
 
@@ -56,18 +56,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?php echo base_url('CrudKepengurusan/addInventaris'); ?>" method="post">
+            <form action="<?php echo base_url('Inventaris/editInventaris'); ?>" method="post">
                 <div class="modal-body">
+
                     <div class="form-group">
-                        <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="nama barang">
+                        <input type="text" class="form-control" id="ROW_ID" name="ROW_ID" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="edit_nama_barang" name="nama_barang" placeholder="nama barang">
                     </div>
 
                     <div class="form-group">
 
-                        <input type="text" class="form-control" id="jumlah_barang" name="jumlah_barang" placeholder="jumlah barang">
+                        <input type="text" class="form-control" id="edit_jumlah_barang" name="jumlah_barang" placeholder="jumlah barang">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="kondisi" name="kondisi" placeholder="kondisi">
+                        <input type="text" class="form-control" id="edit_kondisi" name="kondisi" placeholder="kondisi barang">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -88,7 +92,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?php echo base_url('CrudKepengurusan/addInventaris'); ?>" method="post">
+            <form action="<?php echo base_url('Inventaris/addInventaris'); ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="nama barang">
@@ -110,7 +114,50 @@
         </div>
     </div>
 </div>
+<script>
+  $(document).on("click", ".swal-delete", function(id) {
+    var id_del = this.id;
+    // console.log(id_del)
+    Swal.fire({
+      icon: 'question',
+      title: 'Are you sure?',
+      type: 'warning',
+      width: 400,
+      showCancelButton: true,
+      confirmButtonColor: '#922c2c',
+      cancelButtonColor: '#858796',
+      confirmButtonText: 'Yes, delete it!',
+      // closeOnCancel: false
+    }).then((result) => {
 
 
+      if (result.value == true) {
+        window.location = '<?php echo base_url('Inventaris/delInventaris/') ?>' + id_del;
+        // console.log(id_del)
+      }
+    })
+  })
+</script>
+<script>
+    $(document).on("click", ".edit-button2", function(id) {
+        var id_inventaris = this.id
+        console.log(id_inventaris);
+        $.ajax({
+            type: "POST",
+            data: {
+                id_inventaris: id_inventaris
+            },
+            url: '<?= base_url('Inventaris/showDataEditIvt') ?>',
+            success: function(data) {
+                var objectResult = JSON.parse(data)
+                console.log(objectResult);
+                $("#ROW_ID").val(objectResult.id_ivt);
+                $("#edit_jumlah_barang").val(objectResult.jumlah_barang);
+                $("#edit_nama_barang").val(objectResult.nama_barang);
+                $("#edit_kondisi").val(objectResult.kondisi);
+            }
+        })
+    });
+</script>
 
 </div>

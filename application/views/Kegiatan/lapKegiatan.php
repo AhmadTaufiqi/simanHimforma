@@ -6,47 +6,105 @@
 
   <div class="card shadow mb-4">
     <div class="card-body">
+      <input type="date" id="minDate" name="minDate" class="form-control form-control-sm" hidden>
+      <input type="date" id="maxDate" name="maxDate" class="form-control form-control-sm" hidden>
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-
-              <th colspan="2" width="34%">perencanaan</th>
-              <th colspan="2" width="33%">pelaksanaan</th>
-              <th colspan="2" width="33%">pertanggungjawaban</th>
-
+              
+              <th>perencanaan</th>
+              <th width="35%">pelaksanaan</th>
+              <th width="30%">pertanggungjawaban</th>
+              
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($lapProgram as $pr) : ?>
-              <tr>
-                <td><?= $pr['nama_prog'] ?></td>
-                <td><?= $pr['id'] ?></td>
-                <td><?php
-                    $pelaksanaan = $this->db->get_where('pelaksanaan', ['id_prog' => $pr['id']])->row_array();
-                    if ($pelaksanaan) {
-                      echo ($pelaksanaan['nama_kegiatan']);
-                    ?></td>
+            <?php foreach($lapPerencanaan as $rencana):?>
+            <tr>
+              <td class="p-1">
+                <div class="row p-2">
 
-              <?= "<td width='12%'><a class='btn text-info' title='file selain PDF akan otomatis ter-download' target='blank' href=" . base_url('assets/files/proposal_terlaksana/') . $pelaksanaan['file_proposal'] . ">buka file</a><a title='pengawas mengkonfirmasi PROPOSAL yang di kirim' id=" . $pelaksanaan['id'] . " class='swal-konfirm-pelaksanaan btn text-danger'  href='#'>konfirmasi</a></td>";
-                    } else {
-                      echo "<td></td>";
-                    }
+                  <div class="col px-1 d-flex flex-column">
+                    <h4 class="mb-1 font-weight-bold"><?= $rencana['nama_kegiatan']?></h4>
+                    <p class="mb-2"><?= $rencana['deskripsi']?></p>
+                    <div class="row mt-auto">
+                      <div class="col-5 pr-0">
+                        <p class=" mb-0">tanggal: </p>
+                      </div>
+                      <div class="col pl-0">
+                        <p class="mb-0"><?= $rencana['tgl_perencanaan']?></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-5 px-1">
+                    <h5 class="mb-1 font-weight-bold">Tujuan</h5>
+                    <p class="mb-2"><?= $rencana['tujuan']?></p>
+                    <h5 class="mb-1 font-weight-bold">Sasasran</h5>
+                    <p class="mb-2"><?= $rencana['sasaran']?></p>
+                  </div>
+                </div>
+              </td>
+
+              <?php 
+              $pelaksanaan = $this->db->get_where('pelaksanaan',['id_perencanaan' => $rencana['id_perencanaan']])->row_array();
+              if(!$pelaksanaan){
+                $pelaksanaan['nama_kegiatan'] = "-";
+                $pelaksanaan['tgl_pelaksanaan'] = "-";
+                $pelaksanaan['file_proposal'] = "-";
+              }
+                ?>
+              <td class="p-1">
+                <div class=" p-2">
+                  <div class="row px-2">
+                    <div class="col px-1 d-flex flex-column">
+                      <h4 class="mb-1 font-weight-bold"><?= $pelaksanaan['nama_kegiatan']?></h4>
+                      <div class="row mt-auto">
+                        <div class="col-5 pr-0">
+                          <p class=" mb-0">tanggal: </p>
+                        </div>
+                        <div class="col pl-0">
+                          <p class="mb-0"><?= $pelaksanaan['tgl_pelaksanaan']?></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col px-1">
+                      <a href="<?= base_url('assets/files/proposal_terlaksana/') . $pelaksanaan['file_proposal'] ?>" class="btn p-2 shadow2" target="blank" style="height:140px; display: flex; flex-direction: column;align-items:center; overflow:hidden;">
+                        <img width="100" src="<?= base_url('assets/img/book_icon.png') ?>" alt="">
+                        <span><?= $pelaksanaan['nama_kegiatan'] ?></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <?php
+              $pertanggungjwb = $this->db->get_where('pertanggungjwb',['id_perencanaan' => $rencana['id_perencanaan']])->row_array();
+              if(!$pertanggungjwb){
+                $pertanggungjwb['nama_kegiatan'] = "-";
+                $pertanggungjwb['link_dokumentasi'] = "-";
+                $pertanggungjwb['catatan'] = "-";
+                $pertanggungjwb['file_lpj'] = "-";
+              }
               ?>
-              <td><?php
-                  $pertanggungjwb = $this->db->get_where('pertanggungjwb', ['id_prog' => $pr['id']])->row_array();
-                  if ($pertanggungjwb) {
-                    echo ($pertanggungjwb['nama_kegiatan']);
-
-                  ?></td>
-            <?= "<td width='12%'><a class='btn text-info' title='file selain PDF akan otomatis ter-download' target='blank' href=" . base_url('assets/files/proposal_terlaksana/') . $pertanggungjwb['lpj'] . ">buka file</a><a title='pengawas mengkonfirmasi LAPORAN yang di kirim' id=" . $pertanggungjwb['id'] . " class='swal-konfirm-pertanggungjwb btn text-danger'  href='#'>konfirmasi</a></td>";
-                  } else {
-                    echo "<td></td>";
-                  }
-            ?>
-              </tr>
-
-            <?php endforeach; ?>
+              <td class="p-1">
+                <div class=" p-2">
+                  <div class="row px-2">
+                    <div class="col-5 px-1 d-flex flex-column">
+                      <h4 class="mb-1 font-weight-bold"><?= $pertanggungjwb['nama_kegiatan']?></h4>
+                      <span><?= $pertanggungjwb['catatan']?></span>
+                      <a class=" text-info" href="#" title="(jika ada)"><?= $pertanggungjwb['link_dokumentasi']?></a>
+                    </div>
+                    <div class="col px-1">
+                      <a href="<?= base_url('assets/files/LPJ/') . $pertanggungjwb['file_lpj'] ?>" class="btn p-2 shadow2" target="blank" style="height:140px; display: flex; flex-direction: column;align-items:center; overflow:hidden;">
+                        <img width="100" src="<?= base_url('assets/img/book_icon.png') ?>" alt="">
+                        <span><?= $pertanggungjwb['nama_kegiatan'] ?></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <?php endforeach;?>
           </tbody>
         </table>
       </div>
@@ -84,54 +142,3 @@
 
 
 </div>
-<script>
-  //alert confirm delete
-  $(document).on("click", ".swal-konfirm-pelaksanaan", function(id) {
-    var id_pel = this.id;
-    Swal.fire({
-      icon:'question',
-      title: 'Are you sure?',
-      width: 600,
-      showCancelButton: true,
-      showDenyButton: true,
-      confirmButtonColor: '.btn-success',
-      cancelButtonColor: '#858796',
-      confirmButtonText: 'Konfirmasi !',
-      denyButtonText: 'Tolak  proposal !',
-      closeOnCancel: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location = '<?= base_url('Pengawas/konfirmPelaksanaan?id_pel=') ?>' + id_pel + '&&konfirm=1';
-        console.log("1")
-      } else if (result.isDenied) {
-        window.location = '<?= base_url('Pengawas/konfirmPelaksanaan?id_pel=') ?>' + id_pel + '&&konfirm=0';
-        // console.log("0")
-      }
-    })
-  })
-  $(document).on("click", ".swal-konfirm-pertanggungjwb", function(id) {
-    var id_lpj = this.id;
-    // console.log(id_lpj)
-    Swal.fire({
-      icon:'question',
-      title: 'konfirmasi laporan pertanggungjawaban',
-      width:600,
-      buttonWidth:200,
-      showCancelButton: true,
-      showDenyButton: true,
-      confirmButtonColor: '.btn-success',
-      cancelButtonColor: '#858796',
-      confirmButtonText: 'Konfirmasi !',
-      denyButtonText: 'tolak  Laporan !',
-      closeOnCancel: false
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location = '<?= base_url('Pengawas/konfirmPertanggunjwb?id_lpj=') ?>' + id_pel + '&&konfirm=1';
-        console.log("1")
-      } else if (result.isDenied) {
-        window.location = '<?= base_url('Pengawas/konfirmPertanggungjwb?id_lpj=') ?>' + id_pel + '&&konfirm=0';
-        // console.log("0")
-      }
-    })
-  })
-</script>

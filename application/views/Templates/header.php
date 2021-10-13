@@ -28,7 +28,8 @@
 
     <link href="<?php echo base_url('assets/'); ?>css/style.css" rel="stylesheet" type="text/css">
     <script src="<?php echo base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
-    <script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.js"></script>
+    <!-- <script src="<?= base_url('assets/') ?>vendor/chart.js/Chart.js"></script> -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 

@@ -11,14 +11,12 @@ class Kalender extends CI_Controller
         $this->load->model('user_model');
         $this->load->model('calendar_model');
         is_logged_in();
-        // if (!$this->session->userdata('email')) {
-        //     redirect('Auth');
-        // }
     }
     public function index()
     {
         $data['user'] = $this->user_model->dataUser();
-        $data['title'] = 'BASE';
+        $data['title'] = 'Kalender Kegiatan';
+        $data['tb_agenda'] = $this->db->query('SELECT * FROM perencanaan INNER JOIN pelaksanaan ON perencanaan.id_perencanaan = pelaksanaan.id_perencanaan')->result_array();
         $this->load->view('Templates/header', $data);
         $this->load->view('Templates/sidebar', $data);
         $this->load->view('Templates/topbar', $data);
@@ -46,14 +44,16 @@ class Kalender extends CI_Controller
     function load()
     {
         $event_data = $this->calendar_model->fetch_event();
+
         foreach ($event_data->result_array() as $row) {
             $data[] = array(
-                'id' => $row['id'],
-                'title' => $row['nama_agenda'] . ' : ' . $row['keterangan'],
-                'start' => $row['start'],
-                'end' => $row['end']
+                'id' => $row['id_pelaksanaan'],
+                'title' => $row['nama_kegiatan'],
+                'start' => $row['tgl_pelaksanaan'],
+                'end' => date('Y-m-d', strtotime('+1 days', strtotime($row['tgl_pelaksanaan'])))
             );
         }
+
         echo json_encode($data);
     }
 

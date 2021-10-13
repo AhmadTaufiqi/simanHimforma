@@ -21,9 +21,9 @@ class Dashboard extends CI_Controller
     $data['title'] = 'Dashboard';
     $data['dashboard'] = "Kepengurusan";
 
-    $program = $this->Kegiatan_model->Program();
+    $program = $this->Kegiatan_model->Perencanaan();
     foreach ($program as $pg) {
-      $dt['prog'] = $pg['nama_prog'];
+      $dt['prog'] = $pg['nama_kegiatan'];
       $dt['total_dana'] = $pg['dana_keseluruhan'];
       $dt['warna'] = $pg['warna_terlaksana'];
       $dt['border'] = $pg['border'];
@@ -36,14 +36,23 @@ class Dashboard extends CI_Controller
 
     // echo json_encode($dana);
     $data['data_chart'] = 'labels: ' . json_encode($prog) . ',
-        datasets: [{
-            label: "",
+        datasets: [
+        {
+            label: ["terlaksana"],
             data: ' . json_encode($dana) . ',
             
             backgroundColor:' . json_encode($warna) . ',
             borderColor: ' . json_encode($border) . ',
             borderWidth: 2
-        }]';
+        },
+        {
+          label:["belum terlaksana"],
+          backgroundColor :"rgba(255, 99, 132, 0.2)",
+          borderColor: "rgba(255,99,132,1)",
+          borderWidth:2
+
+        }
+        ]';
 
     $this->load->view('Templates/header', $data);
     $this->load->view('Templates/sidebar', $data);

@@ -55,9 +55,10 @@
             selectable: true,
             selctHelper: true,
             header: {
+                title:'tesss',
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'month,agendaWeek'
             },
             buttonText: {
                 today: 'today',
@@ -65,7 +66,7 @@
                 week: 'week',
                 day: 'day'
             },
-            events: "<?php echo base_url('calendar/load'); ?>",
+            events: "<?php echo base_url('Kalender/load'); ?>",
         });
     });
 </script>

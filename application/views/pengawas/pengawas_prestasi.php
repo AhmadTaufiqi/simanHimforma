@@ -1,9 +1,40 @@
-<div class="container-fluid p-2">
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <?php echo $this->session->flashdata('message'); ?>
-  <button type="button" aria-label="print" id="print_prestasi" class="btn btn-info btn-sm button-fixed btm-right-end"><i class="fas fa-print"></i> cetak prestasi</button>
+    <title><?php echo $title; ?></title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets/img/himforma.png') ?>" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="<?= base_url('assets/') ?>css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <link href="<?php echo base_url('assets/'); ?>css/style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+  
+  
+  
+  <div class="sticky-button-home">
+    <a href="dashboard" class="btn btn-sm btn-secondary"><i class="fas fa-home"></i></a>
+  </div>
+  <div class="container-fluid p-2">
+    <?php echo $this->session->flashdata('message'); ?>
+    
+    <button type="button" aria-label="print" id="print_prestasi" class="btn btn-info btn-sm button-fixed btm-right-end"><i class="fas fa-print"></i> cetak prestasi</button>
 
   <div class="card shadow mb-4">
     <div class="card-body">
@@ -51,84 +82,55 @@
 
 </div>
 
-<div class="modal fade" id="modaltambahPrestasi" tabindex="-1" role="dialog" aria-labelledby="modalsubmenulabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalsubmenulabel">Tambah prestasi</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <?php echo form_open_multipart('Prestasi/addPrestasi'); ?>
-      <div class="modal-body">
 
-        <div class="custom-file mb-3">
-          <input type="file" class="custom-file-input" id="foto_prestasi" name="foto_prestasi">
-          <label class="custom-file-label" for="file">choose photo</label>
-        </div>
+<script src="<?php echo base_url('assets/') ?>vendor/jquery/jquery.min.js"></script>
+<script src="<?= base_url('assets/') ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <div class="form-group">
-          <input type="text" class="form-control" id="nama_prestasi" name="nama_prestasi" placeholder="nama prestasi">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="nama_peraih" name="nama_peraih" placeholder="nama peraih prestasi">
-        </div>
-        <div class="form-group">
-          <input type="number" class="form-control" id="npm" name="npm" placeholder="NPM">
-        </div>
-        <div class="form-group">
-          <input type="date" class="form-control" id="tanggal_prestasi" name="tanggal_prestasi" placeholder="tanggal prestasi">
-        </div>
-        <div class="form-group">
-          <input type="textarea" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Add</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
+<!-- Core plugin JavaScript-->
+<script src="<?= base_url('assets/') ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<!-- <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js"></script> -->
+<script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-</div>
+<!-- Page level custom scripts -->
 <script>
-  //alert confirm delete
-  $(document).on("click", ".swal-delete", function(id) {
-    var id_del = this.id;
-    console.log(id_del)
-    Swal.fire({
-      title: 'Are you sure?',
-      type: 'warning',
-      width: 400,
-      showCancelButton: true,
-      confirmButtonColor: '#922c2c',
-      cancelButtonColor: '#858796',
-      confirmButtonText: 'Yes, delete it!',
-      // closeOnCancel: false
-    }).then((result) => {
+    var minDate;
+    var maxDate;
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            var date = data[4];
+            if (
+                (min == "" && max == "") ||
+                (min == "" && date <= max) ||
+                (min <= date && max == "") ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
+    $(document).ready(function() {
+        minDate = $('#minDate');
+        maxDate = $('#maxDate');
+        var table = $('#dataTable').DataTable();
 
-      if (result.value == true) {
-        window.location = '<?php echo base_url('prestasi/deletePrestasi/') ?>' + id_del;
-        console.log(id_del)
-      }
-    })
-  })
+        // Refilter the table
+        $('#minDate, #maxDate').on('change', function() {
+            table.draw();
+        });
+    });
 </script>
+
 
 <script>
   $('#print_prestasi').click(function () {
-    // console.log("mantap")
-    // var printme = document.getElementById('dataTable');
     window.print();
-    // var wme = window.open("","","width=900","height=700");
-    // wme.document.print(printme);
-    // wme.document.close();
-    // wme.focus();
-    // wme.print();
-    // wme.close();
   })
 </script>
+</body>
+</html>

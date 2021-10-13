@@ -18,54 +18,69 @@
         </div>
     </div>
 
-
-    <div class="card mb-3">
-        <div class="row no-gutters">
-            <div class="col">
-                <img src="<?php echo base_url('assets/') ?>img/berita/1-1.png" class="card-img" alt="...">
-            </div>
-            <div class="col-md-6">
-                <div class="card-body">
-                    <h5 class="card-title">MEET UP ITU-TECH </h5>
-                    <p class="card-text">himforma<br>
-                        Minggu, 25 Oktober 2020 ITU TECH mengadakan acara yaitu MEET UP ITU TECH dengan Tema IDEMU KARYA – IN #1. Dalam acara ini ITU TECH membahas tentang “Video Editing For Beginners Using Adobe Premiere”...
-                    </p>
-                    <!-- Acara ini dibuka oleh Ketua Program Studi Informatika yaitu Bapak Bambang Agus Herlambang, S.Kom., M.Kom. Yang menjadi pemateri dalam acara ini adalah Hamida Sonia (Lead ITU TECH at Bintang Multimedia Semarang). Dalam acara ini membahas seputar videografi dan bagaimana cara mengedit video menggunakan adobe premiere bagi pemula. Acara ini diikuti oleh mahasiswa Univesitas PGRI Semarang maupun luar Universitas PGRI Semarang. -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card mb-3">
-        <div class="row no-gutters">
-            <div class="col">
-                <img src="<?php echo base_url('assets/') ?>img/berita/2-2.png" class="card-img" alt="...">
-            </div>
-            <div class="col-md-6">
-                <div class="card-body">
-                    <h5 class="card-title">MEET UP ITU-TECH </h5>
-                    <p class="card-text">himforma<br>
-                        Open House Program Studi Informatika 2020 adalah sebuah kegiatan yang diperuntukkan untuk mahasiswa baru Informatika tahun 2020. Tujuan dari kegiatan ini adalah untuk menyambut mahasiswa baru sekaligus memberikan informasi terkait perkuliahan yang akan diampu oleh mahasiswa baru di program studi informatika. Selain informasi terkait perkuliahan ...
-                    </p>
-                    <!-- mahasiswa baru juga mendapatkan informasi tentang komunitas – komunitas di lingkup prodi Informatika dan juga Ormawa (Himpunan Mahasiswa Informatika) dan juga Organisasi luar (Permikomnas Jateng).Acara ini diikuti oleh seluruh mahasiswa baru Program Studi Informatika 2020. -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card mb-3">
-        <div class="row no-gutters">
-            <div class="col" style="text-align:center;">
-                <img src="<?php echo base_url('assets/') ?>img/untitled_diagram.png" style="width: 50%; " class="card-img" alt="...">
-            </div>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="row no-gutters">
-            <div class="col" style="text-align:center;">
+    <div class="row no-gutters">
+        <div class="col-5" style="text-align:center;">
+            <div class="card mr-2  p-3">
                 <!-- <div class="chart-area"> -->
-                <canvas id="myChart" width="200" height="100"></canvas>
+                <canvas id="myChart" width="100" height="75"></canvas>
                 <!-- </div> -->
+            </div>
+        </div>
+        <div class="col px-3">
+            <div class="row">
+                <div class="card mb-2">
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <img src="<?php echo base_url('assets/') ?>img/berita/1-1.png" class="card-img" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title">MEET UP ITU-TECH </h5>
+                                <p class="card-text">himforma<br>
+                                <?php
+                                if(strlen('Minggu, 25 Oktober 2020 ITU TECH mengadakan acara yaitu MEET UP ITU TECH dengan Tema IDEMU KARYA – IN #1. Dalam acara ini ITU TECH membahas tentang “Video Editing For Beginners Using Adobe Premiere”...') >90){
+                                    echo (substr("Minggu, 25 Oktober 2020 ITU TECH mengadakan acara yaitu MEET UP ITU TECH dengan Tema IDEMU KARYA – IN #1. Dalam acara ini ITU TECH membahas tentang “Video Editing For Beginners Using Adobe Premiere”...",0,97).".. <br>") ;
+                                }
+                                ?>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row-2">s</div> -->
+            <div class="row">
+                <div class="card mb-2">
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <img src="<?php echo base_url('assets/') ?>img/berita/2-2.png" class="card-img" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body p-2">
+                                <h5 class="card-title mb-0">MEET UP ITU-TECH </h5>
+                                <p class="card-text">tanggal<br>
+                                    <?php
+                                    if ( strlen("Open House Program Studi Informatika 2020 adalah sebuah kegiatan yang diperuntukkan untuk mahasiswa baru Informatika tahun 2020. Tujuan dari kegiatan ini adalah untuk menyambut mahasiswa baru sekaligus memberikan informasi terkait perkuliahan yang akan diampu oleh mahasiswa baru di program studi informatika. Selain informasi terkait perkuliahan") > 90 ){
+                                        echo (substr("Open House Program Studi Informatika 2020 adalah sebuah kegiatan yang diperuntukkan untuk mahasiswa baru Informatika tahun 2020. Tujuan dari kegiatan ini adalah untuk menyambut mahasiswa baru sekaligus memberikan informasi terkait perkuliahan yang akan diampu oleh mahasiswa baru di program studi informatika. Selain informasi terkait perkuliahan",0,99).".. <br>") ;
+
+                                    } else {
+                                        echo "isi tulisan artikel";
+                                    }
+                                    $awal = ('2000-04-01');
+                                    // $akhir = date('Y-m-d');
+                                    $akhir = date_create();
+                                    // $selisih = date_diff($awal,$akhir);
+                                    // var_dump( $selisih);
+                                    echo date('Y-m-d', strtotime('-3 days', strtotime($awal)));
+
+                                    ?>
+                                </p>
+                                <!-- mahasiswa baru juga mendapatkan informasi tentang komunitas – komunitas di lingkup prodi Informatika dan juga Ormawa (Himpunan Mahasiswa Informatika) dan juga Organisasi luar (Permikomnas Jateng).Acara ini diikuti oleh seluruh mahasiswa baru Program Studi Informatika 2020. -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -81,18 +96,19 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            <?= $data_chart?>,
+            <?= $data_chart ?>,
         },
         options: {
             scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+                x: {
+                    stacked: true
+                },
+                y: {
+                    beginAtZero: true,
+                    stacked: true
+                }
             }
         }
     });
-
 </script>
 <!-- End of Main Content -->

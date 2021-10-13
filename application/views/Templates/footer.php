@@ -2,7 +2,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span> <span style="color: #bebebe;">Copyright &copy;</span> UPTTIK Universitas PGRI Semarang <?php echo date('Y') ?></>
+            <span> <span style="color: #bebebe;">Copyright &copy;</span> Ahmad Taufiqi Muhsinin (sebagai syarat kelulusan) <?php echo date('Y') ?></>
         </div>
     </div>
 </footer>
@@ -40,16 +40,6 @@
 
 <!-- Bootstrap core JavaScript-->
 
-<!-- <script src="<?php //echo base_url('assets/'); 
-                    ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-
-<!-- Core plugin JavaScript-->
-<!-- <script src="<?php //echo base_url('assets/'); 
-                    ?>vendor/jquery-easing/jquery.easing.min.js"></script> -->
-
-<!-- Custom scripts for all pages-->
-<!-- <script src="<?php //echo base_url('assets/'); 
-                    ?>js/sb-admin-2.min.js"></script> -->
 <script>
     $('.custom-file-input').on('change', function() {
         let filename = $(this).val().split('\\').pop();
@@ -57,13 +47,10 @@
     });
 </script>
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/') ?>kalender/tanggalan/jquery.min.js"></script>
 <script src="<?php echo base_url('assets/') ?>kalender/tanggalan/moment.js"></script>
 <script src="<?php echo base_url('assets/') ?>kalender/tanggalan/fullcalendar/fullcalendar.min.js"></script>
-<!-- <script src="<?php echo base_url('assets/') ?>kalender/tanggalan/script.js"></script> -->
 <script>
     $(document).ready(function() {
         var calendar = $('#calendar').fullCalendar({
@@ -81,7 +68,7 @@
                 week: 'week',
                 day: 'day'
             },
-            events: "<?php echo base_url('calendar/load'); ?>",
+            events: "<?php echo base_url('Kalender/load'); ?>",
         });
     });
     window.setTimeout(function() {
@@ -90,21 +77,16 @@
         });
     }, 5000);
 </script>
-<!-- <script src="<?= base_url('assets/') ?>vendor/jquery/jquery.min.js"></script> -->
 <script src="<?= base_url('assets/') ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="<?= base_url('assets/') ?>vendor/jquery-easing/jquery.easing.min.js"></script>
-
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js"></script>
-
-
 <script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <!-- Page level custom scripts -->
-
 <script>
     var minDate;
     var maxDate;
