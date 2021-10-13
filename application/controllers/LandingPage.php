@@ -51,6 +51,6 @@ class LandingPage extends CI_Controller
         }
         ]';
 		$this->load->view('landing_page', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('Templates/footer');
 	}
 }
