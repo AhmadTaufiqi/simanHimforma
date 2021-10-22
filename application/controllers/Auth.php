@@ -40,11 +40,10 @@ class Auth extends CI_Controller
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
 
-		$user = $this->db->get_where('user', ['email' => $email])->row_array();
-
 		//if usser ada
+		//cek password
+		$user = $this->db->get_where('user', ['email' => $email])->row_array();
 		if ($user) {
-			//cek password
 			if (password_verify($password, $user['password'])) {
 				$data = [
 					'email' => $user['email'],
@@ -52,11 +51,6 @@ class Auth extends CI_Controller
 				];
 				$this->session->set_userdata($data);
 				redirect('Dashboard');
-				// if ($user['role_id'] == 1) {
-				// 	redirect('Dashboard');
-				// } else {
-				// 	redirect('Dashboard');
-				// }
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 					wrong password </div>');

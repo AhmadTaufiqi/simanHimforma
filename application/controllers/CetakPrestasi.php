@@ -18,6 +18,10 @@ class CetakPrestasi extends CI_Controller
     $data['user'] = $this->user_model->dataUser();
     $data['title'] = 'prestasi';
     $data['prestasi'] = $this->db->get('prestasi')->result_array();
+    $this->load->view('Templates/header', $data);
+    $this->load->view('Templates/sidebar', $data);
+    $this->load->view('Templates/topbar', $data);
     $this->load->view('Pengawas/pengawas_prestasi', $data);
+    // $this->load->view('Templates/footer');
   }
 }
