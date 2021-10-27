@@ -200,10 +200,9 @@
             // console.log(data)
             var status = JSON.parse(data)
             if((status.status) == "success"){
-
               window.location = '<?php echo base_url('ManageAccount') ?>';
-            }else if((status.status) == 'delete'){
-              console.log(status.status);
+              // alert('berhasil di hapus');
+            
             }else{
               Swal.fire({
                 icon:'info',

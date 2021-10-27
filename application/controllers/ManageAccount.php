@@ -71,6 +71,10 @@ class ManageAccount extends CI_Controller
     // $account = $this->db->get_where('user',['email'=> $sess_email])->row_array();
 
       
+    $account = $this->db->get_where('user',['email'=> $email])->row_array();
+    if($account AND ($email != $email_old)){
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">email sudah tersedia!</div>');
+    }else{
 
       if ($this->form_validation->run() == false) {
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><p class="mb-2">isi data dengan benar!</p> <span class="small">' . validation_errors() . '</span></div>');
@@ -103,6 +107,8 @@ class ManageAccount extends CI_Controller
         }
             // echo json_encode()
       }
+      
+    }
     redirect('ManageAccount');
   }
 
@@ -119,7 +125,7 @@ class ManageAccount extends CI_Controller
     $email = $this->input->post('email_user');
     $nama = $this->input->post('nama_user');
     $hak_akses = $this->input->post('hak_akses');
-    $password = $this->input->post('password1');
+    $password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
     $account = $this->db->get_where('user',['email'=> $email])->row_array();
       if($account){
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">email sudah tersedia!</div>');
@@ -132,7 +138,9 @@ class ManageAccount extends CI_Controller
               'email' => $email,
               'name' => $nama,
               'role_id' => $hak_akses,
-              'password' => $password
+              'password' => $password,
+              'date_created' => time(),
+              'image' => "default.png"
             ];
             // echo json_encode()
             $this->db->insert('user',$data);
@@ -151,7 +159,9 @@ class ManageAccount extends CI_Controller
     if($email == $sess_email){
       $tes['status'] = "noo";
     }else{
-      $tes['status'] = "delete";
+      $this->db->delete('user',['email' => $email]);
+      // redirect('ManageAccount');
+      // $tes['status'] = "delete";
     }
     echo json_encode($tes);
   }
