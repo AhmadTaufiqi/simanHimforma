@@ -14,7 +14,7 @@
             <tr>
               
               <th>perencanaan</th>
-              <th width="35%">pelaksanaan</th>
+              <th width="30%">pelaksanaan</th>
               <th width="30%">pertanggungjawaban</th>
               
             </tr>
@@ -92,7 +92,7 @@
                     <div class="col-5 px-1 d-flex flex-column">
                       <h4 class="mb-1 font-weight-bold"><?= $pertanggungjwb['nama_kegiatan']?></h4>
                       <span><?= $pertanggungjwb['catatan']?></span>
-                      <a class=" text-info" href="#" title="(jika ada)"><?= $pertanggungjwb['link_dokumentasi']?></a>
+                      <a class=" text-info" href="<?= $pertanggungjwb['link_dokumentasi']?>" title="(jika ada)" target="_blank">buka link</a>
                     </div>
                     <div class="col px-1">
                       <a href="<?= base_url('assets/files/LPJ/') . $pertanggungjwb['file_lpj'] ?>" class="btn p-2 shadow2" target="blank" style="height:140px; display: flex; flex-direction: column;align-items:center; overflow:hidden;">

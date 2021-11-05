@@ -33,13 +33,17 @@
                   <div class="text-center">
                     <a class="small" href="<?= base_url('Auth/ForgotPassword')?>">Lupa Password ?</a>
                   </div>
+                  <div class="text-center">
+                    <a class="small" href="<?= base_url('')?>">kembali</a>
+                  </div>
+                </form>
               </div>
-            </>
+            </div>
           </div>
+          
         </div>
+        
       </div>
-
-    </div>
 
   </div>
 

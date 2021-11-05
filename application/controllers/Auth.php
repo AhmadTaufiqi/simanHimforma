@@ -100,10 +100,10 @@ class Auth extends CI_Controller
 				$this->db->insert('user_token', $user_token);
 				$this->_sendEmail($token, 'forgot');
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Please check your email to reset your password</div>');
-				redirect('auth/forgotpassword');
+				redirect('Auth/ForgotPassword');
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email is not registered or activated</div>');
-				redirect('auth/forgotpassword');
+				redirect('Auth/ForgotPassword');
 			}
 		}
 	}
@@ -114,7 +114,7 @@ class Auth extends CI_Controller
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.googlemail.com',
 			'smtp_user' => 'ahmadtaufiky1@gmail.com',
-			'smtp_pass' => 'ahmadtaufiqi2000',
+			'smtp_pass' => 'ahmadtaufiky2000',
 			'smtp_port' => 465,
 			'mailtype' => 'html',
 			'charset' => 'utf-8',
@@ -138,7 +138,8 @@ class Auth extends CI_Controller
 		if ($this->email->send()) {
 			return true;
 		} else {
-			echo $this->email->print_debugger();
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">reset tidak berhasil</div>');
+			redirect('Auth/ForgotPassword');
 			die;
 		}
 	}
