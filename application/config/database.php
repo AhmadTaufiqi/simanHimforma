@@ -78,7 +78,6 @@ $db['default'] = array(
 	'username' => 'ahmadtau_siman',
 	'password' => 'Taufiky2000',
 	'database' => 'ahmadtau_sistem_ormale',
-	'database' => 'ormale_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
