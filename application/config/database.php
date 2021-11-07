@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
+	'username' => 'ahmadtau_siman',
+	'password' => 'Taufiky2000',
+	'database' => 'ahmadtau_sistem_ormale',
 	'database' => 'ormale_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
