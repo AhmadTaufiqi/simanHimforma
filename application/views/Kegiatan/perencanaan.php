@@ -46,7 +46,9 @@
 						</tr> -->
 					</thead>
 					<tbody>
-						<?php foreach ($perencanaan as $ar) : ?>
+						<?php
+						error_reporting(0);
+						 foreach ($perencanaan as $ar) : ?>
 							<tr>
 								<td class="p-1"><?php echo $ar['nama_kegiatan'] ?></td>
 								<td class="p-1"><?php echo $ar['deskripsi'] ?></td>
@@ -254,5 +256,11 @@
 			}
 		})
 	})
+
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        "order": [[ 3, "desc" ]]
+    } );
+} );
 </script>
 <!-- End of Main Content -->

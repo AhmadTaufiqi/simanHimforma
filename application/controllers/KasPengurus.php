@@ -17,8 +17,8 @@ class KasPengurus extends CI_Controller
   {
     $data['user'] = $this->user_model->dataUser();
     $data['dashboard'] = "Kepengurusan";
-    $yearnow = date('Y');
-    $where = '(periode1=' . $yearnow . ' or periode2 = ' . $yearnow . ')';
+    $periode = $this->db->get_where('periode', ['status' => 1])->row_array();
+    $where = '(tap_periode=' . $periode[''] .')';
     $data['pengurus'] = $this->db->get_where('pengurus', $where)->result_array();
     foreach ($data['pengurus'] as $ar) {
       $this->db->select_sum('nominal');

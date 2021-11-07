@@ -17,6 +17,7 @@ class Pengurus extends CI_Controller
   {
     $data['user'] = $this->user_model->dataUser();
     $data['pengurus'] = $this->db->get_where('pengurus')->result_array();
+    $data['periode'] = $this->db->get_where('periode')->result_array();
     $data['title'] = 'Pengurus';
 
     $this->load->view('Templates/header', $data);
@@ -32,11 +33,10 @@ class Pengurus extends CI_Controller
     $npm = $this->input->post('npm');
     $file = $_FILES['foto-pengurus']['name'];
     $nama = $this->input->post('nama');
-    $semester = $this->input->post('semester');
-    $periode1 = $this->input->post('periode1');
-    $periode2 = $this->input->post('periode2');
+    $jabatan = $this->input->post('jabatan');
+    $periode = $this->input->post('periode');
 
-    if (strlen($npm) == 0 || strlen($nama) == 0 || strlen($semester) == 0 || strlen($periode1) == 0) {
+    if (strlen($npm) == 0 || strlen($nama) == 0 || strlen($jabatan) == 0 || strlen($periode) == 0) {
       $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">data harus di isi lengkap!</div>');
     } else {
 
@@ -48,9 +48,8 @@ class Pengurus extends CI_Controller
             'npm' => $npm,
             // 'foto_pengurus' => '',
             'nama' => $nama,
-            'semester' => $semester,
-            'periode1' => $periode1,
-            'periode2' => $periode2
+            'jabatan' => $jabatan,
+            'tgl_periode' => $periode
           );
           // echo json_encode($data);
           $this->db->insert('pengurus', $data);
@@ -67,9 +66,8 @@ class Pengurus extends CI_Controller
               'npm' => $npm,
               'foto_pengurus' => $new_file,
               'nama' => $nama,
-              'semester' => $semester,
-              'periode1' => $periode1,
-              'periode2' => $periode2
+              'jabatan' => $jabatan,
+              'tgl_periode' => $periode
             );
 
             $this->db->insert('pengurus', $data);
@@ -146,5 +144,24 @@ class Pengurus extends CI_Controller
   public function delPengurus($id_peng)
   {
     echo $id_peng;
+  }
+  public function Periode(){
+    $periode = $this->input->post('tap_periode');
+    if($periode){
+      $data2 = array(
+        'status'=> 0 
+      );
+      $this->db->update('periode',$data2);
+
+      $data = array(
+        'tap_periode' => $periode,
+        'status' => '1'
+      );
+      $this->db->insert('periode',$data);
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">periode baru telah di tetapkan!</div>');
+    }else{
+      $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">anda belum menetapkan periode!</div>');
+    }
+    redirect('Pengurus');
   }
 }
