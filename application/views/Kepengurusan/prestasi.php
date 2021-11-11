@@ -22,7 +22,8 @@
           <thead>
             <tr>
 
-              <th>Foto</th>
+              <th width="8%">Bukti Prestasi</th>
+              <!-- <th>Foto</th> -->
               <th>Prestasi</th>
               <th>peraih prestasi</th>
               <th width="10%">NPM</th>
@@ -34,7 +35,14 @@
           <tbody>
             <?php foreach ($prestasi as $pr) : ?>
               <tr>
-                <td><img height="50" src="<?= base_url('assets/img/foto_prestasi/') . $pr['foto_prestasi'] ?>" alt=""></td>
+                <td>
+                  <a href="<?= base_url('assets/files/sertifikat_prestasi/').$pr['bukti_prestasi'] ?>" class="btn shadow2" target="blank" style="height:80px; display: flex; flex-direction: column;align-items:center; overflow:hidden;">
+                    <img width="50" src="<?= base_url('assets/img/book_icon.png') ?>" alt="">
+                    <span class="small">buka file</span>
+                  </a>
+                </td>
+                <!-- <td><img height="50" class="img-show" id="<?= base_url('assets/img/foto_prestasi/') . $pr['foto_prestasi'] ?>" src="<?= base_url('assets/img/foto_prestasi/') . $pr['foto_prestasi'] ?>" alt="">
+            </td> -->
                 <td><?= $pr['nama_prestasi'] ?></td>
                 <td><?= $pr['nama_peraih'] ?></td>
                 <td><?= $pr['npm'] ?></td>
@@ -67,11 +75,6 @@
       <?php echo form_open_multipart('Prestasi/addPrestasi'); ?>
       <div class="modal-body">
 
-        <div class="custom-file mb-3">
-          <input type="file" class="custom-file-input" id="foto_prestasi" name="foto_prestasi">
-          <label class="custom-file-label" for="file">choose photo</label>
-        </div>
-
         <div class="form-group">
           <input type="text" class="form-control" id="nama_prestasi" name="nama_prestasi" placeholder="nama prestasi">
         </div>
@@ -85,8 +88,16 @@
           <input type="date" class="form-control" id="tanggal_prestasi" name="tanggal_prestasi" placeholder="tanggal prestasi">
         </div>
         <div class="form-group">
-          <input type="textarea" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan">
+          <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan"></textarea>
         </div>
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="sertif_prestasi" name="sertif_prestasi">
+          <label class="custom-file-label" for="file">bukti prestasi</label>
+        </div>
+        <!-- <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="foto_prestasi" name="foto_prestasi">
+          <label class="custom-file-label" for="file">foto saat peraihan</label>
+        </div> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -97,7 +108,19 @@
   </div>
 </div>
 
-
+<div class="modal fade" id="modalShowImage" tabindex="-1" role="dialog" aria-labelledby="modalsubmenulabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" class="h1 text-light">&times;</span>
+    </div>
+    <div class="modal-content">
+      <!-- <div class="modal-body"> -->
+        <img width="500" class="img-modal" src="" alt="">
+      <!-- </div> -->
+    </div>
+  </div>
+</div>
 <!-- form edit modal -->
 
 <div class="modal fade" id="modalEditPrestasi" tabindex="-1" role="dialog" aria-labelledby="modalsubmenulabel" aria-hidden="true">
@@ -113,9 +136,13 @@
       <div class="modal-body">
 
         <input type="text" class="form-control" id="edit_id_prestasi" name="id_prestasi" placeholder="id prestasi" hidden>
-        <div class="custom-file mb-3">
+        <!-- <div class="custom-file mb-3">
           <input type="file" class="custom-file-input" id="edit_foto_prestasi" name="foto_prestasi">
-          <label class="custom-file-label" for="file">choose photo</label>
+          <label class="custom-file-label" for="file">foto saat peraihan</label>
+        </div> -->
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="edit_file_prestasi" name="sertif_prestasi">
+          <label class="custom-file-label" for="file">bukti prestasi</label>
         </div>
         
         <div class="form-group">
@@ -160,7 +187,7 @@ $(document).on("click", ".edit-button2", function(id) {
 				var objectResult = JSON.parse(data)
 				console.log(objectResult)
 				$("#edit_id_prestasi").val(objectResult.id_prestasi);
-				$("#edit_foto_prestasi").next('.custom-file-label').addClass("selected").html(objectResult.foto_prestasi);
+				$("#edit_file_prestasi").next('.custom-file-label').addClass("selected").html(objectResult.bukti_prestasi);
 				$("#edit_nama_prestasi").val(objectResult.nama_prestasi);
 				$("#edit_nama_peraih").val(objectResult.nama_peraih);
 				$("#edit_npm").val(objectResult.npm);
@@ -193,6 +220,15 @@ $(document).on("click", ".edit-button2", function(id) {
     })
   })
 
-
-  
+</script>
+<script>
+  $(document).on("click", ".img-show", function(id) {
+    var id_img = this.id;
+    // console.log(id_img)
+    $("#modalShowImage").modal({
+        show: true
+    }); 
+    $(".img-modal").attr("src",id_img)
+    
+  })
 </script>

@@ -22,9 +22,11 @@ class Prestasi extends CI_Controller
     $this->load->view('Kepengurusan/prestasi', $data);
     $this->load->view('Templates/footer');
   }
+
   public function addPrestasi()
   {
-    $foto_prestasi = $_FILES['foto_prestasi']['name'];
+    // $foto_prestasi = $_FILES['foto_prestasi']['name'];
+    $sertif_prestasi = $_FILES['sertif_prestasi']['name'];
     $nama_prestasi = $this->input->post('nama_prestasi');
     $nama_peraih = $this->input->post('nama_peraih');
     $npm = $this->input->post('npm');
@@ -33,34 +35,38 @@ class Prestasi extends CI_Controller
     if (strlen($nama_prestasi) == 0 || strlen($nama_peraih) == 0 || strlen($npm) == 0 ||  strlen($tanggal_prestasi) == 0 || strlen($keterangan) == 0) {
       $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">detail prestasi harus di isi!</div>');
     } else {
-      if (strlen($foto_prestasi) == 0) {
-        $foto_prestasi = "default.png";
-      } else {
-        $config['allowed_types'] = 'img|jpg|png|jpeg';
-        $config['max_size'] = '5480';
-        $config['upload_path'] = './assets/img/foto_prestasi/';
 
+      if (strlen($sertif_prestasi) == 0) {
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">bukti prestasi harus di isi!</div>');
+      } else {          
+        $config['allowed_types'] = 'pdf';
+        $config['max_size']     = '9000';
+        $config['upload_path'] = './assets/files/sertifikat_prestasi/';
         $this->load->library('upload', $config);
-        if ($this->upload->do_upload('foto_prestasi')) {
-          $foto_prestasi = $this->upload->data('file_name');
-        } else {
-          // $tes = $this->upload->display_errors();
-          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">file tidak sesuai !</div>');
-          redirect('Prestasi');
-        }
+        
+        if ($this->upload->do_upload('sertif_prestasi')) {
+          $sertif_prestasi = $this->upload->data('file_name');
+          }else{
+            
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">file tidak sesuai !</div>');
+            redirect('Prestasi');
+          }
+     
+        
+        $data = [
+          'bukti_prestasi' => $sertif_prestasi,
+          // 'foto_prestasi' => $foto_prestasi,
+          'nama_prestasi' => $nama_prestasi,
+          'nama_peraih' => $nama_peraih,
+          'npm' =>  $npm,
+          'tanggal_prestasi' => $tanggal_prestasi,
+          'keterangan' => $keterangan
+        ];
+  
+        // $tes  = $data;
+        $this->db->insert('prestasi', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil di input!</div>');
       }
-      $data = [
-        'foto_prestasi' => $foto_prestasi,
-        'nama_prestasi' => $nama_prestasi,
-        'nama_peraih' => $nama_peraih,
-        'npm' =>  $npm,
-        'tanggal_prestasi' => $tanggal_prestasi,
-        'keterangan' => $keterangan
-      ];
-
-      // $tes  = $data;
-      $this->db->insert('prestasi', $data);
-      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">data berhasil di input!</div>');
     }
     redirect('Prestasi');
   }
@@ -88,28 +94,30 @@ class Prestasi extends CI_Controller
     } else {
 
       $data2 = $this->db->get_where('prestasi', ['id_prestasi' => $rowid])->row_array();
-      $file = $_FILES['foto_prestasi'];
+      $file = $_FILES['sertif_prestasi'];
       // if($file)
       if ($file['name']) {
-        $config['allowed_types'] = 'png|jpg|jpeg|img';
-        $config['max_size'] = '20480';
-        $config['upload_path'] = './assets/img/foto_prestasi/';
+        $config['allowed_types'] = 'pdf';
+        $config['max_size'] = '9000';
+        $config['upload_path'] = './assets/files/sertifikat_prestasi/';
 
         $this->load->library('upload', $config);
 
-        if ($this->upload->do_upload('foto_prestasi')) {
+        if ($this->upload->do_upload('sertif_prestasi')) {
 
-          $old_file = $data2['foto_prestasi'];
+          $old_file = $data2['bukti_prestasi'];
           $new_file = $this->upload->data('file_name');
           if ($old_file != $new_file) {
-            unlink(FCPATH . 'assets/img/foto_prestasi/' . $old_file);
+            unlink(FCPATH . './assets/files/sertifikat_prestasi/' . $old_file);
           }
           // $this->db->set('file_proposal', $new_file);
         } else {
-          echo  $this->upload->display_errors();
+          
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">file tidak sesuai !</div>');
+          redirect('Prestasi');
         }
       } else {
-        $new_file = $data2['foto_prestasi'];
+        $new_file = $data2['bukti_prestasi'];
       }
       // echo($new_file);
 
@@ -119,7 +127,7 @@ class Prestasi extends CI_Controller
         'npm' => $this->input->post('npm'),
         'tanggal_prestasi' => $this->input->post('tanggal_prestasi'),
         'keterangan' => $this->input->post('keterangan'),
-        'foto_prestasi' => $new_file
+        'bukti_prestasi' => $new_file
       );
       // echo json_encode($data);
       $where = ['id_prestasi' => $rowid];
